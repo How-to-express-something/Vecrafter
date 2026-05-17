@@ -1,0 +1,565 @@
+﻿<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio">
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <title>矢量艺术字工坊 | 文生图 + 智能矢量化 UI 概念</title>
+        <!-- Google Font & Font Awesome -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background: #ecf2f7;
+                font-family: 'Inter', sans-serif;
+                color: #1e2f3b;
+                padding: 32px 36px;
+            }
+
+            /* 主容器 */
+            .app-wrapper {
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+
+            /* 头部区域 */
+            .app-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                flex-wrap: wrap;
+                margin-bottom: 32px;
+                gap: 20px;
+            }
+
+            .brand h1 {
+                font-size: 30px;
+                font-weight: 700;
+                background: linear-gradient(135deg, #1c5f6e, #32849e);
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                letter-spacing: -0.4px;
+            }
+
+                .brand h1 i {
+                    background: none;
+                    -webkit-background-clip: unset;
+                    color: #1f6e7e;
+                    margin-right: 8px;
+                }
+
+            .brand p {
+                font-size: 14px;
+                color: #55758b;
+                margin-top: 6px;
+            }
+
+            .header-tags {
+                display: flex;
+                gap: 12px;
+            }
+
+            .tag {
+                background: rgba(255,255,255,0.7);
+                backdrop-filter: blur(4px);
+                padding: 6px 16px;
+                border-radius: 40px;
+                font-size: 13px;
+                font-weight: 500;
+                color: #1a5b6b;
+                border: 1px solid #c8dee9;
+            }
+
+                .tag i {
+                    margin-right: 6px;
+                    font-size: 12px;
+                }
+
+            /* 两栏主区域 */
+            .main-dashboard {
+                display: flex;
+                gap: 28px;
+                flex-wrap: wrap;
+            }
+            /* 左侧控制区 */
+            .control-panel {
+                flex: 1.2;
+                min-width: 340px;
+                background: rgba(255,255,255,0.85);
+                backdrop-filter: blur(3px);
+                border-radius: 36px;
+                box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+                padding: 28px 24px;
+                border: 1px solid rgba(255,255,255,0.8);
+            }
+            /* 右侧预览区 */
+            .preview-panel {
+                flex: 2;
+                min-width: 480px;
+                background: rgba(255,255,255,0.88);
+                backdrop-filter: blur(3px);
+                border-radius: 36px;
+                padding: 28px 24px;
+                box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+                border: 1px solid rgba(255,255,255,0.9);
+            }
+
+            /* 模式切换卡 */
+            .mode-switch {
+                display: flex;
+                gap: 12px;
+                background: #eef3f8;
+                border-radius: 60px;
+                padding: 6px;
+                margin-bottom: 32px;
+            }
+
+            .mode-item {
+                flex: 1;
+                text-align: center;
+                padding: 10px 0;
+                border-radius: 50px;
+                font-weight: 600;
+                font-size: 14px;
+                background: transparent;
+                color: #2e6a7c;
+                cursor: default;
+                transition: all 0.2s;
+            }
+
+                .mode-item.active {
+                    background: white;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                    color: #1b6f80;
+                }
+
+                .mode-item i {
+                    margin-right: 8px;
+                }
+
+            /* 表单样式 */
+            .input-group {
+                margin-bottom: 22px;
+            }
+
+            label {
+                font-weight: 600;
+                font-size: 13px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 8px;
+                color: #1f4c5c;
+            }
+
+                label i {
+                    width: 18px;
+                    font-size: 14px;
+                    color: #3e8398;
+                }
+
+            input, textarea, select {
+                width: 100%;
+                padding: 12px 16px;
+                border-radius: 28px;
+                border: 1px solid #cfdfea;
+                background: #ffffff;
+                font-family: 'Inter', monospace;
+                font-size: 14px;
+                transition: 0.2s;
+                outline: none;
+            }
+
+                input:focus, textarea:focus, select:focus {
+                    border-color: #31849b;
+                    box-shadow: 0 0 0 3px rgba(49,132,155,0.12);
+                }
+
+            .row-2 {
+                display: flex;
+                gap: 16px;
+            }
+
+                .row-2 > div {
+                    flex: 1;
+                }
+
+            /* 折叠参数区 */
+            .adv-params {
+                background: #f5fafd;
+                border-radius: 28px;
+                padding: 14px 18px;
+                margin: 16px 0;
+            }
+
+            .adv-header {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 600;
+                color: #206b7c;
+                cursor: default;
+            }
+
+            .adv-content {
+                margin-top: 14px;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            /* 按钮 */
+            .btn-generate {
+                background: #1e6d7e;
+                border: none;
+                width: 100%;
+                padding: 14px 0;
+                border-radius: 40px;
+                font-weight: 600;
+                font-size: 15px;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                cursor: default;
+                transition: 0.2s;
+                margin-top: 6px;
+            }
+
+            .btn-secondary {
+                background: #eaf1f7;
+                border: 1px solid #cde1ec;
+                color: #1f6e7e;
+            }
+
+            /* 预览区域 */
+            .preview-card-item {
+                margin-bottom: 28px;
+            }
+
+            .preview-title {
+                font-weight: 600;
+                margin-bottom: 12px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .preview-box {
+                background: repeating-conic-gradient(#e2ecf3 0% 25%, #ffffff 0% 50%) 50% / 20px 20px;
+                border-radius: 28px;
+                padding: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 260px;
+            }
+
+            .art-sample {
+                background: white;
+                border-radius: 24px;
+                padding: 16px 24px;
+                box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+                text-align: center;
+            }
+
+                .art-sample img {
+                    max-width: 100%;
+                    border-radius: 16px;
+                }
+
+            .svg-mock {
+                background: transparent;
+            }
+
+            .mock-svg {
+                width: 100%;
+                max-height: 220px;
+            }
+
+            .download-row {
+                display: flex;
+                gap: 12px;
+                margin-top: 18px;
+                flex-wrap: wrap;
+            }
+
+            .mock-btn {
+                background: #ffffff;
+                border: 1px solid #cde0ea;
+                padding: 8px 18px;
+                border-radius: 30px;
+                font-size: 13px;
+                font-weight: 500;
+                color: #235f6e;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                cursor: default;
+            }
+            /* 日志 */
+            .log-console {
+                background: #1e2f38;
+                border-radius: 24px;
+                padding: 16px 20px;
+                margin-top: 24px;
+                font-family: 'SF Mono', monospace;
+                font-size: 12px;
+                color: #cae3ef;
+                max-height: 150px;
+                overflow-y: auto;
+            }
+
+            /* 批量表格样式 */
+            .batch-table {
+                overflow-x: auto;
+                margin-top: 12px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 13px;
+            }
+
+            th, td {
+                padding: 10px 8px;
+                text-align: left;
+                border-bottom: 1px solid #d9e6f0;
+            }
+
+            .batch-actions {
+                margin: 18px 0;
+                display: flex;
+                gap: 12px;
+            }
+
+            .file-upload-area {
+                border: 2px dashed #bdd4e2;
+                background: #fafefd;
+                border-radius: 32px;
+                padding: 32px 20px;
+                text-align: center;
+            }
+
+            hr {
+                margin: 20px 0;
+                border-color: #e2eef5;
+            }
+
+            @media (max-width: 780px) {
+                body {
+                    padding: 16px;
+                }
+
+                .control-panel, .preview-panel {
+                    min-width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="app-wrapper">
+            <!-- 头部 -->
+            <div class="app-header">
+                <div class="brand">
+                    <h1><i class="fas fa-magic"></i> ArtForge · 矢量艺术字工坊</h1>
+                    <p>基于开源文生图模型 (ComfyUI) + Python 智能矢量化 | 透明背景 · 可缩放SVG · 批量生产</p>
+                </div>
+                <div class="header-tags">
+                    <div class="tag"><i class="fas fa-cube"></i> 本地部署</div>
+                    <div class="tag"><i class="fas fa-palette"></i> 多风格控制</div>
+                    <div class="tag"><i class="fas fa-vector-square"></i> 路径可编辑</div>
+                </div>
+            </div>
+
+            <div class="main-dashboard">
+                <!-- 左侧控制区 UI (纯展示) -->
+                <div class="control-panel">
+                    <div class="mode-switch">
+                        <div class="mode-item active"><i class="fas fa-pen-fancy"></i> 单条生成</div>
+                        <div class="mode-item"><i class="fas fa-layer-group"></i> 批量生成</div>
+                        <div class="mode-item"><i class="fas fa-arrows-spin"></i> 图片矢量化</div>
+                    </div>
+
+                    <!-- 单条生成面板内容 (静态占位) -->
+                    <div>
+                        <div class="input-group">
+                            <label><i class="fas fa-font"></i> 文字内容 (中文/英文/数字)</label>
+                            <input type="text" value="青山集" placeholder="例：七里香 / 爱情海 / Latte 2.0" readonly>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fas fa-feather-alt"></i> 风格提示词</label>
+                            <textarea rows="3" readonly style="resize: none;">青绿色水墨质感，金色细描边，搭配山形与竹叶装饰，透明背景，品牌标识感。</textarea>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fas fa-ban"></i> 负面提示词</label>
+                            <input type="text" value="模糊，杂乱背景，错误文字，低清晰度，畸形" readonly>
+                        </div>
+                        <div class="row-2">
+                            <div><label>分辨率</label><select disabled><option>1024x1024</option><option>1024x768</option></select></div>
+                            <div><label>随机种子</label><input value="8802" readonly></div>
+                        </div>
+
+                        <div class="adv-params">
+                            <div class="adv-header">
+                                <span><i class="fas fa-sliders-h"></i> 高级 / 矢量化参数</span>
+                                <span><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="adv-content">
+                                <div class="row-2">
+                                    <div><label>颜色聚类数量</label><input value="6" readonly></div>
+                                    <div><label>平滑阈值</label><input value="1.2" readonly></div>
+                                </div>
+                                <div class="row-2">
+                                    <div><label>最小区域过滤(px)</label><input value="50" readonly></div>
+                                    <div><label>路径拟合精度</label><input value="1.0" readonly></div>
+                                </div>
+                                <div><label style="gap: 4px;"><i class="far fa-check-square"></i> 保留渐变/阴影模拟 (勾选示意)</label></div>
+                            </div>
+                        </div>
+
+                        <div class="btn-generate">
+                            <i class="fas fa-wand-magic"></i> 生成艺术字 + 矢量转换 (展示)
+                        </div>
+                        <div class="btn-generate btn-secondary" style="margin-top: 12px; background: #eef3f8;">
+                            <i class="fas fa-copy"></i> 载入示例 (七里香)
+                        </div>
+                    </div>
+
+                    <!-- 批量生成面板（静态，默认隐藏效果但为了完整结构给出示意，实际只展示单条模式为活跃，但我们仅UI设计因此仅保留视觉统一）-->
+                    <div style="display: none;"></div>
+                    <div class="log-console">
+                        <i class="fas fa-terminal"></i> 系统日志<br>
+                        [14:32:18] 就绪 | ComfyUI 工作流已加载 (SDXL + LoRA 风格控制)<br>
+                        [14:32:20] 支持文字内容校验: 青山集 → 生成中<br>
+                        [14:32:25] 透明背景提取完成 | 矢量化管线: 轮廓分层 → 路径拟合<br>
+                        [14:32:28] SVG 分组输出: 主文字 / 描边 / 装饰叶片 → 可编辑矢量文件已就绪
+                    </div>
+                </div>
+
+                <!-- 右侧预览区 UI (静态展示示例艺术字 + SVG 矢量预览) -->
+                <div class="preview-panel">
+                    <div class="preview-card-item">
+                        <div class="preview-title">
+                            <span><i class="fas fa-image"></i> 生成图像 (透明PNG) </span>
+                            <span class="tag" style="background:#e5f3f7;"><i class="fas fa-check-circle"></i> Alpha通道</span>
+                        </div>
+                        <div class="preview-box">
+                            <div class="art-sample">
+                                <!-- 模拟艺术字预览：用纯 SVG 和 CSS 展示示例艺术字风格 -->
+                                <svg width="400" height="220" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" style="background: transparent;">
+                                    <defs>
+                                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#5f8b6f" />
+                                            <stop offset="100%" stop-color="#b3945c" />
+                                        </linearGradient>
+                                    </defs>
+                                    <rect width="500" height="220" fill="transparent" />
+                                    <text x="70" y="130" font-family="'Noto Serif SC', 'KaiTi', serif" font-size="58" fill="url(#goldGrad)" stroke="#d4af37" stroke-width="2">青山集</text>
+                                    <circle cx="420" cy="50" r="15" fill="#95b78d" opacity="0.7" />
+                                    <path d="M440 70 Q460 90 440 110" stroke="#7a9f6e" fill="none" stroke-width="3" />
+                                    <path d="M60 160 L90 180 L110 155" stroke="#b6955c" fill="none" stroke-width="2.5" />
+                                    <path d="M340 180 Q380 195 410 175" stroke="#9bbd8a" fill="none" stroke-width="3" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preview-card-item" style="margin-top: 20px;">
+                        <div class="preview-title">
+                            <span><i class="fas fa-vector-square"></i> SVG 矢量预览 (分层可编辑)</span>
+                            <span class="tag"><i class="fas fa-code-branch"></i> 路径闭合/分组</span>
+                        </div>
+                        <div class="preview-box" style="min-height: 220px;">
+                            <div class="svg-mock" style="width: 100%;">
+                                <svg width="100%" height="200" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" style="background: transparent;">
+                                    <g id="main-text-group" fill="#2C6B4A" stroke="#E5B83C" stroke-width="2.2">
+                                        <path d="M55,90 L120,50 L190,80 L165,130 L80,125 Z" />
+                                        <path d="M215,70 L280,40 L350,75 L320,125 L230,115 Z" />
+                                        <text x="70" y="160" font-family="'Noto Serif SC'" font-size="36" fill="#C9883B" stroke="none">青山集</text>
+                                    </g>
+                                    <g id="decoration-leaves" fill="#7FB07F" opacity="0.8">
+                                        <circle cx="410" cy="45" r="14" />
+                                        <circle cx="440" cy="35" r="9" />
+                                        <path d="M425,70 Q445,90 420,105 Q400,95 425,70Z" />
+                                    </g>
+                                    <g id="golden-stroke" fill="none" stroke="#D3A83E" stroke-width="2">
+                                        <path d="M30,40 L470,40" stroke-dasharray="6 4" />
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="download-row">
+                            <div class="mock-btn"><i class="fas fa-download"></i> 下载透明 PNG</div>
+                            <div class="mock-btn"><i class="fas fa-file-code"></i> 下载 SVG 矢量</div>
+                            <div class="mock-btn"><i class="fas fa-clipboard-list"></i> 复制元数据</div>
+                        </div>
+                    </div>
+
+                    <!-- 额外展示批量模式示意（静态块） -->
+                    <hr>
+                    <div>
+                        <div class="preview-title">
+                            <span><i class="fas fa-tasks"></i> 批量任务示例 (Batch Mode UI)</span>
+                            <span class="tag">支持 CSV/JSON 清单</span>
+                        </div>
+                        <div class="batch-table">
+                            <table>
+                                <thead><tr><th>文字</th><th>风格摘要</th><th>种子</th><th>SVG 状态</th></tr></thead>
+                                <tbody>
+                                    <tr><td>七里香</td><td>墨绿金边，叶片装饰</td><td>1024</td><td><i class="fas fa-check-circle" style="color:#32849e;"></i> 已生成</td></tr>
+                                    <tr><td>爱情海</td><td>蓝青海浪，爱心海鸥</td><td>2048</td><td><i class="fas fa-check-circle" style="color:#32849e;"></i> 已生成</td></tr>
+                                    <tr><td>梨园醉梦</td><td>红黑渐变，梅花折扇</td><td>3072</td><td><i class="fas fa-check-circle"></i> 矢量完成</td></tr>
+                                    <tr><td>红豆抹茶 30%</td><td>粉紫卡通描边，醒目数字</td><td>4096</td><td><i class="fas fa-check-circle"></i> 分组输出</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="batch-actions">
+                            <div class="mock-btn" style="background:#f0f6fa;"><i class="fas fa-upload"></i> 导入提示词清单</div>
+                            <div class="mock-btn" style="background:#f0f6fa;"><i class="fas fa-play"></i> 批量运行</div>
+                        </div>
+                    </div>
+
+                    <!-- 图片矢量化模式预览占位 -->
+                    <hr>
+                    <div class="preview-title">
+                        <span><i class="fas fa-upload"></i> 独立矢量化模式 (上传已有艺术字)</span>
+                    </div>
+                    <div class="file-upload-area">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 36px; color:#2f8198;"></i>
+                        <p style="margin-top: 8px; font-size: 13px;">点击或拖拽上传 PNG/JPG 艺术字图片，自动提取轮廓并输出分层SVG</p>
+                        <div class="mock-btn" style="margin-top: 12px; background: white;"><i class="fas fa-folder-open"></i> 选择文件</div>
+                    </div>
+                    <div style="margin-top: 16px; display: flex; gap: 12px; justify-content: flex-end;">
+                        <div class="mock-btn"><i class="fas fa-cog"></i> 矢量化参数 (颜色聚类/拟合)</div>
+                        <div class="mock-btn"><i class="fas fa-vector-square"></i> 执行矢量化</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 脚注说明 (UI 设计展示用) -->
+            <div style="margin-top: 30px; text-align: center; font-size: 12px; color: #608aa0; border-top: 1px solid #cfe1ec; padding-top: 20px;">
+                <i class="fas fa-check-circle"></i> 符合项目规范: ComfyUI 工作流集成 | 透明背景 | 可编辑 SVG | 批量处理 | 路径分组与颜色分层
+                <span style="margin-left: 20px;"><i class="fas fa-shield-alt"></i> 本地化部署 · 数据不外传</span>
+            </div>
+        </div>
+    </body>
+</html>
+</html>
+
+
+</BODY>
+</HTML>
