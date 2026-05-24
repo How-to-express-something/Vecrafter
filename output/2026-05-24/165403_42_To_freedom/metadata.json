@@ -1,0 +1,15 @@
+{
+  "prompt_id": "389b9b01-1114-413b-a420-31e3cc643d8b",
+  "text": "To freedom",
+  "style_prompt": "澄清蓝调渐变，海浪纹理环绕字体，珍珠细碎浪花气泡点缀，柔光氛围感",
+  "negative_prompt": "模糊，杂乱背景，错误文字",
+  "seed": 42,
+  "width": 1024,
+  "height": 1024,
+  "steps": 8,
+  "cfg": 1.1,
+  "sampler_name": "euler",
+  "scheduler": "sgm_uniform",
+  "timestamp_utc": "2026-05-24T08:54:03Z",
+  "generation_time_seconds": 103.56
+}

@@ -1,0 +1,15 @@
+{
+  "prompt_id": "5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a",
+  "text": "艺术字“向阳生”",
+  "style_prompt": "国风书法，墨色渐变，金色描边，梅花装饰，透明背景",
+  "negative_prompt": "模糊，杂乱背景，错误文字",
+  "seed": 42,
+  "width": 1024,
+  "height": 1024,
+  "steps": 8,
+  "cfg": 1.1,
+  "sampler_name": "euler",
+  "scheduler": "sgm_uniform",
+  "timestamp_utc": "2026-05-24T09:26:59Z",
+  "generation_time_seconds": 123.0
+}

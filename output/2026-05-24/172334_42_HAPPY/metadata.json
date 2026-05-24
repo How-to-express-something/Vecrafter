@@ -1,0 +1,15 @@
+{
+  "prompt_id": "e49db895-377f-4ad3-acbb-0ed34a745b02",
+  "text": "毕业 HAPPY",
+  "style_prompt": "复古花体艺术字“毕业HAPPY”，浅粉加浅蓝渐变，飘飞纸飞机、彩带、小气球点缀，柔和自然光，青春元气，简约清新",
+  "negative_prompt": "模糊，杂乱背景，错误文字",
+  "seed": 42,
+  "width": 1024,
+  "height": 1024,
+  "steps": 8,
+  "cfg": 1.1,
+  "sampler_name": "euler",
+  "scheduler": "sgm_uniform",
+  "timestamp_utc": "2026-05-24T09:23:34Z",
+  "generation_time_seconds": 137.67
+}

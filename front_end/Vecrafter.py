@@ -8,7 +8,13 @@ from PIL import Image, ImageDraw, ImageFont
 import io
 import time
 import json
+import base64
+import re
+import requests
+import logging
+from pathlib import Path
 from datetime import datetime
+from logging.handlers import RotatingFileHandler
 from typing import Dict, Any, List
 
 # ======================= 页面配置 =======================
@@ -84,42 +90,92 @@ def render_art_title():
     '''
     return svg_title
 
-# ======================= 后端模拟接口 =======================
+
+BACKEND_URL = "http://127.0.0.1:8000"
+
+# ======================= 前端持久化日志 =======================
+_LOG_DIR = Path(__file__).resolve().parent.parent / "logs"
+_LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+_frontend_logger = logging.getLogger("vecrafter.frontend")
+_frontend_logger.setLevel(logging.DEBUG)
+_fh = RotatingFileHandler(
+    _LOG_DIR / "frontend.log",
+    maxBytes=5 * 1024 * 1024,
+    backupCount=3,
+    encoding="utf-8",
+)
+_fh.setFormatter(logging.Formatter(
+    "%(asctime)s | %(levelname)-8s | %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+))
+_frontend_logger.addHandler(_fh)
+
+
+def _make_slug(text: str, max_len: int = 20) -> str:
+    """将文本转为文件系统安全的 ASCII slug"""
+    safe = re.sub(r'[^a-zA-Z0-9 ]', '', text)
+    slug = re.sub(r'\s+', '_', safe.strip())
+    return slug[:max_len] if slug else "art"
+
+
+def _make_download_name(meta: dict, idx: int) -> str:
+    """根据元数据生成有意义的下载文件名"""
+    if meta:
+        seed = meta.get("seed", idx)
+        text = meta.get("text", "art")
+        slug = _make_slug(text)
+        return f"vecrafter_{slug}_{seed}.png"
+    return f"art_{idx}.png"
+
+
+# ======================= 后端 API =======================
 class BackendAPI:
     @staticmethod
     def generate_art(text: str, style_prompt: str, negative_prompt: str,
                      seed: int, resolution: str, vector_params: Dict) -> Dict:
-        time.sleep(1.2)
         try:
-            size = 512
-            img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-            draw = ImageDraw.Draw(img)
-            try:
-                font = ImageFont.truetype("simhei.ttf", 48)
-            except:
-                font = ImageFont.load_default()
-            draw.text((size//2 - 60, size//2 - 30), text[:4], fill=(60, 120, 80, 255), font=font)
-            draw.ellipse((size-80, 20, size-20, 80), fill=(200, 180, 100, 180))
-            buf = io.BytesIO()
-            img.save(buf, format="PNG")
-            png_bytes = buf.getvalue()
-            
-            svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
-            <rect width="600" height="400" fill="transparent"/>
-            <g id="main-text" fill="#2C6B4A" stroke="#D4AF37" stroke-width="2">
-                <text x="80" y="200" font-family="'Noto Serif SC', 'KaiTi'" font-size="56" fill="#2C6B4A">{text}</text>
-            </g>
-            <g id="decoration" fill="#7FB07F" opacity="0.8">
-                <circle cx="500" cy="80" r="18"/>
-                <path d="M520,110 Q540,140 510,150 Q490,140 520,110Z"/>
-            </g>
-            </svg>'''
-            metadata = {
-                "text": text, "style": style_prompt[:80], "seed": seed,
-                "resolution": resolution, "timestamp": datetime.now().isoformat()
+            w, h = resolution.split("x")
+            payload = {
+                "text": text,
+                "style_prompt": style_prompt,
+                "negative_prompt": negative_prompt,
+                "seed": int(seed),
+                "width": int(w),
+                "height": int(h),
+                "steps": 8,
+                "cfg": 1.1,
+                "sampler_name": "euler",
+                "scheduler": "sgm_uniform",
             }
-            return {"success": True, "png_bytes": png_bytes, "svg_str": svg_content, "metadata": metadata}
+            resp = requests.post(
+                f"{BACKEND_URL}/generate",
+                json=payload,
+                timeout=900
+            )
+            if resp.status_code != 200:
+                add_log(f"后端返回错误: {resp.status_code}", level="ERROR")
+                return {"success": False, "error_msg": f"Backend error: {resp.text}"}
+
+            data = resp.json()
+            images_b64 = data.get("images", [])
+            if not images_b64:
+                add_log("后端未返回图片", level="ERROR")
+                return {"success": False, "error_msg": "No images returned"}
+
+            png_bytes = base64.b64decode(images_b64[0])
+
+            # 使用后端返回的真实元数据
+            metadata = data.get("metadata", {})
+            metadata["preview_path"] = data.get("preview_path")
+            metadata["metadata_path"] = data.get("metadata_path")
+
+            return {"success": True, "png_bytes": png_bytes, "metadata": metadata}
+        except requests.exceptions.ConnectionError:
+            add_log("无法连接后端服务", level="ERROR")
+            return {"success": False, "error_msg": "无法连接后端服务，请确保后端已启动 (python back_end/main.py)"}
         except Exception as e:
+            add_log(f"生成异常: {e}", level="ERROR")
             return {"success": False, "error_msg": str(e)}
     
     @staticmethod
@@ -149,11 +205,43 @@ def init_session():
         st.session_state.style_preset = ""
     if "show_custom" not in st.session_state:
         st.session_state.show_custom = False
+    if "_history_loaded" not in st.session_state:
+        _load_history_from_backend()
+        st.session_state._history_loaded = True
 
-def add_log(msg):
-    st.session_state.logs.append(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
+
+def _load_history_from_backend():
+    """启动时从后端加载 output/ 中的历史结果"""
+    try:
+        resp = requests.get(f"{BACKEND_URL}/results?limit=20", timeout=10)
+        if resp.status_code != 200:
+            return
+        results = resp.json()
+        for meta in results:
+            st.session_state.history.append({
+                "type": "🎨 生成",
+                "title": meta.get("text", "untitled"),
+                "data": {
+                    "png_bytes": None,
+                    "metadata": meta,
+                    "preview_path": meta.get("preview_path"),
+                },
+                "time": meta.get("timestamp_utc", ""),
+            })
+        if results:
+            add_log(f"从历史记录加载了 {len(results)} 条结果")
+    except Exception:
+        pass
+
+def add_log(msg, level="INFO"):
+    log_line = f"[{datetime.now().strftime('%H:%M:%S')}] {msg}"
+    st.session_state.logs.append(log_line)
     if len(st.session_state.logs) > 30:
         st.session_state.logs = st.session_state.logs[-30:]
+
+    # 同步写入持久化日志文件
+    log_func = getattr(_frontend_logger, level.lower(), _frontend_logger.info)
+    log_func(msg)
 
 def add_to_history(item_type, title, data):
     st.session_state.history.insert(0, {
@@ -282,15 +370,42 @@ def main():
                     st.markdown(f"**{item['type']}** · {item['title'][:20]}")
                     st.caption(f"🕒 {item['time']}")
                     data = item['data']
-                    if "png_bytes" in data:
+                    if "metadata" in data:
+                        meta = data["metadata"]
+                        with st.expander("📋 参数详情", expanded=False):
+                            st.caption(f"种子: {meta.get('seed', 'N/A')}")
+                            gen_time = meta.get('generation_time_seconds')
+                            if gen_time is not None:
+                                st.caption(f"生成耗时: {gen_time}s")
+                            st.caption(f"采样: {meta.get('sampler_name', 'N/A')} / {meta.get('scheduler', 'N/A')}")
+                            st.caption(f"步数: {meta.get('steps', 'N/A')}  CFG: {meta.get('cfg', 'N/A')}")
+                            if meta.get('prompt_id'):
+                                st.caption(f"Prompt ID: {meta['prompt_id']}")
+                    if data.get("png_bytes"):
                         st.image(data["png_bytes"], width=120)
+                        meta = data.get("metadata", {})
+                        filename = _make_download_name(meta, idx)
+                        st.download_button("⬇️ PNG", data=data["png_bytes"],
+                                          file_name=filename, mime="image/png",
+                                          key=f"png_{idx}")
+                    elif data.get("preview_path"):
+                        if st.button("📷 加载预览", key=f"load_{idx}"):
+                            try:
+                                resp = requests.get(
+                                    f"{BACKEND_URL}/results/image",
+                                    params={"path": data["preview_path"]},
+                                    timeout=30,
+                                )
+                                if resp.status_code == 200:
+                                    data["png_bytes"] = resp.content
+                                    st.rerun()
+                            except Exception:
+                                st.error("加载失败")
                     if "svg_str" in data:
                         st.components.v1.html(data["svg_str"], height=100)
-                        col_a, col_b = st.columns(2)
-                        with col_a:
-                            st.download_button("⬇️ PNG", data=data["png_bytes"], file_name=f"art_{idx}.png", mime="image/png", key=f"png_{idx}")
-                        with col_b:
-                            st.download_button("⬇️ SVG", data=data["svg_str"], file_name=f"vector_{idx}.svg", mime="image/svg+xml", key=f"svg_{idx}")
+                        st.download_button("⬇️ SVG", data=data["svg_str"],
+                                          file_name=f"vector_{idx}.svg", mime="image/svg+xml",
+                                          key=f"svg_{idx}")
                     st.markdown("---")
         st.markdown('</div>', unsafe_allow_html=True)
     
@@ -299,6 +414,7 @@ def main():
         st.session_state.trigger_generate = False
         text = text_input.strip()
         if not text:
+            add_log("输入文字为空，跳过生成", level="WARNING")
             st.warning("请输入文字内容")
         else:
             style = st.session_state.style_preset if st.session_state.style_preset else "默认艺术风格"
@@ -313,11 +429,13 @@ def main():
                 st.success("✅ 生成完成，结果已显示在右侧历史中")
                 st.rerun()
             else:
+                add_log(f"生成失败: {result.get('error_msg')}", level="ERROR")
                 st.error(f"生成失败: {result.get('error_msg')}")
     
     if mode == "🖼️ 图片矢量化" and st.session_state.get("trigger_vectorize", False):
         st.session_state.trigger_vectorize = False
         if "vector_file" not in st.session_state or st.session_state.vector_file is None:
+            add_log("未上传图片，跳过矢量化", level="WARNING")
             st.warning("请先上传图片")
         else:
             file = st.session_state.vector_file
@@ -331,6 +449,7 @@ def main():
                 st.success("✅ 矢量化完成，结果已保存")
                 st.rerun()
             else:
+                add_log(f"矢量化失败: {file.name}", level="ERROR")
                 st.error("矢量化失败")
 
 if __name__ == "__main__":

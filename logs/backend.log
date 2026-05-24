@@ -1,0 +1,900 @@
+2026-05-24 14:49:42 | INFO     | Request received: text='青山集', style='默认艺术风格', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 14:49:44 | ERROR    | Generation failed after 2.05s: HTTPConnectionPool(host='127.0.0.1', port=8188): Max retries exceeded with url: /prompt (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E124408490>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')) | request text='青山集'
+2026-05-24 14:52:03 | INFO     | Request received: text='青山集', style='海洋浪漫，蓝青渐变，海浪贝壳装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 14:52:05 | ERROR    | Generation failed after 2.03s: HTTPConnectionPool(host='127.0.0.1', port=8188): Max retries exceeded with url: /prompt (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E12440AE00>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')) | request text='青山集'
+2026-05-24 14:52:35 | INFO     | Request received: text='红豆生南国', style='国风书法，墨色渐变，金色描边，梅花装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 14:52:37 | ERROR    | Generation failed after 2.03s: HTTPConnectionPool(host='127.0.0.1', port=8188): Max retries exceeded with url: /prompt (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E12446C430>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')) | request text='红豆生南国'
+2026-05-24 15:09:47 | INFO     | Request received: text='青山集', style='默认艺术风格', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 15:14:57 | INFO     | Request received: text='艺术字"红豆"', style='默认艺术风格', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 15:18:22 | INFO     | Request received: text='艺术字“红豆抹茶”', style='促销卡通，粉紫配色，弧形横幅，描边醒目，数字突出', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 15:20:50 | ERROR    | Generation failed after 352.35s: [WinError 10054] 远程主机强迫关闭了一个现有的连接。 | request text='艺术字"红豆"'
+2026-05-24 15:20:50 | ERROR    | Generation failed after 663.10s: [WinError 10054] 远程主机强迫关闭了一个现有的连接。 | request text='青山集'
+2026-05-24 15:20:50 | ERROR    | Generation failed after 147.46s: [WinError 10054] 远程主机强迫关闭了一个现有的连接。 | request text='艺术字“红豆抹茶”'
+2026-05-24 15:29:05 | INFO     | Request received: text='艺术字"红豆雪糕"', style='促销卡通，粉紫配色，弧形横幅，描边醒目，数字突出', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 15:29:05 | INFO     | WebSocket connected, waiting for prompt_id=85d4f778-73c2-435d-948f-e9089f60e0c9
+2026-05-24 15:31:05 | WARNING  | WebSocket wait timed out after 120s, falling back to polling
+2026-05-24 15:31:05 | INFO     | Polling history for prompt_id=85d4f778-73c2-435d-948f-e9089f60e0c9 (timeout=30s)
+2026-05-24 15:31:36 | ERROR    | Generation failed after 150.47s: Timeout waiting for prompt_id=85d4f778-73c2-435d-948f-e9089f60e0c9 after 30s | request text='艺术字"红豆雪糕"'
+2026-05-24 15:36:35 | INFO     | Request received: text='艺术字"红豆雪糕"', style='促销卡通，粉紫配色，弧形横幅，描边醒目，数字突出', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 15:36:35 | INFO     | WebSocket connected, waiting for prompt_id=525b52ee-b5c1-4c85-acf1-00fe261aecf7
+2026-05-24 15:43:47 | INFO     | Request received: text='艺术字"红豆雪糕"', style='海洋浪漫，蓝青渐变，海浪贝壳装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 15:43:47 | INFO     | WebSocket connected, waiting for prompt_id=fb534eb9-520e-43a8-abad-ec3afeee8065
+2026-05-24 15:43:47 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 15:46:08 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 15:49:22 | INFO     | Request received: text='艺术字"红豆雪糕"', style='默认艺术风格', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 15:49:22 | INFO     | WebSocket connected, waiting for prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:49:22 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 15:49:22 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 15:49:27 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:49:27 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:49:27 | INFO     | WS msg: type=executing, node=4, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:49:42 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:49:42 | INFO     | WS msg: type=progress, node=4, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:49:52 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:49:52 | INFO     | WS msg: type=progress, node=4, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:50:14 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:50:14 | INFO     | WS msg: type=progress, node=4, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:51:06 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:51:06 | INFO     | WS msg: type=progress, node=4, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:51:24 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:51:24 | INFO     | WS msg: type=progress, node=4, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:51:47 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:51:47 | INFO     | WS msg: type=progress, node=4, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:52:43 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:52:43 | INFO     | WS msg: type=progress, node=4, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:11 | INFO     | WS msg: type=progress, node=4, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:11 | INFO     | WS msg: type=executing, node=8, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:16 | INFO     | WS msg: type=executing, node=9, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:16 | INFO     | WS msg: type=executed, node=9, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:16 | INFO     | WS msg: type=executing, node=15, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:20 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:20 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:20 | INFO     | WS msg: type=executing, node=16, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:20 | INFO     | WS msg: type=executed, node=16, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:20 | INFO     | WS msg: type=progress_state, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:20 | INFO     | WS msg: type=execution_success, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:20 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 15:59:24 | INFO     | WS msg: type=executing, node=None, prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:24 | INFO     | Generation completed via WebSocket: prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3
+2026-05-24 15:59:24 | INFO     | Downloaded 2 image(s) for prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3 (attempt 1)
+2026-05-24 15:59:24 | INFO     | Saved: preview=output\2026-05-24\155924_42_untitled\preview.png, metadata=output\2026-05-24\155924_42_untitled\metadata.json
+2026-05-24 15:59:24 | INFO     | Generation completed: prompt_id=0735b417-d719-4560-9de7-ac28fff11fa3, seed=42, gen_time=601.95s, total_time=602.16s
+2026-05-24 16:08:38 | INFO     | Request received: text='夏日雪糕', style='果冻质感的卡通文字写着“SUMMER SALE”。冷色调的蓝色和薄荷绿。边缘有融化效果。周围环绕着卡通冰棍、冰块和飞溅的', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:08:38 | INFO     | WebSocket connected, waiting for prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:08:38 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:08:38 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 16:08:47 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:08:47 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:08:47 | INFO     | WS msg: type=executing, node=4, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:09:05 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:09:05 | INFO     | WS msg: type=progress, node=4, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:09:23 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:09:23 | INFO     | WS msg: type=progress, node=4, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:10:05 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:10:05 | INFO     | WS msg: type=progress, node=4, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:10:35 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:10:35 | INFO     | WS msg: type=progress, node=4, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:10:56 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:10:56 | INFO     | WS msg: type=progress, node=4, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:08 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:08 | INFO     | WS msg: type=progress, node=4, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:21 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:21 | INFO     | WS msg: type=progress, node=4, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:40 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:40 | INFO     | WS msg: type=progress, node=4, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:40 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:40 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:40 | INFO     | WS msg: type=executing, node=8, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:44 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:44 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:44 | INFO     | WS msg: type=executing, node=9, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:44 | INFO     | WS msg: type=executed, node=9, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:44 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:44 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:44 | INFO     | WS msg: type=executing, node=15, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:48 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:48 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:48 | INFO     | WS msg: type=executing, node=16, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:48 | INFO     | WS msg: type=executed, node=16, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:48 | INFO     | WS msg: type=progress_state, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:48 | INFO     | WS msg: type=execution_success, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:52 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:11:52 | INFO     | WS msg: type=executing, node=None, prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:52 | INFO     | Generation completed via WebSocket: prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5
+2026-05-24 16:11:52 | INFO     | Downloaded 2 image(s) for prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5 (attempt 1)
+2026-05-24 16:11:53 | INFO     | Saved: preview=output\2026-05-24\161152_42_untitled\preview.png, metadata=output\2026-05-24\161152_42_untitled\metadata.json
+2026-05-24 16:11:53 | INFO     | Generation completed: prompt_id=2d65998f-a677-48f3-9910-e5d67ebcdad5, seed=42, gen_time=194.24s, total_time=194.56s
+2026-05-24 16:14:39 | INFO     | Request received: text='青山集', style='默认艺术风格', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:14:39 | INFO     | WebSocket connected, waiting for prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:14:39 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:14:39 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 16:14:44 | INFO     | Request received: text='青山集', style='默认艺术风格', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:14:44 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:14:44 | INFO     | WebSocket connected, waiting for prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a
+2026-05-24 16:14:44 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:14:44 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 16:14:44 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:14:44 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:14:44 | INFO     | WS msg: type=executing, node=4, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:15:01 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:15:01 | INFO     | WS msg: type=progress, node=4, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:15:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:15:11 | INFO     | WS msg: type=progress, node=4, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:15:22 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:15:22 | INFO     | WS msg: type=progress, node=4, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:15:27 | INFO     | Request received: text='七里香', style='默认艺术风格', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:15:27 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:15:27 | INFO     | WebSocket connected, waiting for prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:15:27 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:15:27 | INFO     | WS msg: type=executing, node=4, prompt_id=None
+2026-05-24 16:15:28 | INFO     | Request received: text='七里香', style='默认艺术风格', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:15:28 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:15:29 | INFO     | WebSocket connected, waiting for prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29
+2026-05-24 16:15:29 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:15:29 | INFO     | WS msg: type=executing, node=4, prompt_id=None
+2026-05-24 16:15:32 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:15:32 | INFO     | WS msg: type=progress, node=4, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:15:50 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:15:50 | INFO     | WS msg: type=progress, node=4, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:15:52 | INFO     | Request received: text='七里香', style='国风书法，墨色渐变，金色描边，梅花装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:15:52 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:15:52 | INFO     | WebSocket connected, waiting for prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:15:52 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:15:52 | INFO     | WS msg: type=executing, node=4, prompt_id=None
+2026-05-24 16:16:07 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:07 | INFO     | WS msg: type=progress, node=4, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:41 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:41 | INFO     | WS msg: type=progress, node=4, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:55 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:55 | INFO     | WS msg: type=progress, node=4, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:55 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:55 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:55 | INFO     | WS msg: type=executing, node=8, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:58 | INFO     | WS msg: type=executing, node=9, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:58 | INFO     | WS msg: type=executed, node=9, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:16:58 | INFO     | WS msg: type=executing, node=15, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:17:01 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:17:01 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:17:01 | INFO     | WS msg: type=executing, node=16, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:17:01 | INFO     | WS msg: type=executed, node=16, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:17:01 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:17:01 | INFO     | WS msg: type=execution_success, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:17:05 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:17:05 | INFO     | WS msg: type=executing, node=None, prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed
+2026-05-24 16:17:05 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:17:05 | INFO     | WS msg: type=execution_start, node=None, prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a
+2026-05-24 16:17:05 | INFO     | WS msg: type=execution_cached, node=None, prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a
+2026-05-24 16:17:05 | INFO     | WS msg: type=executed, node=9, prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a
+2026-05-24 16:17:05 | INFO     | WS msg: type=progress_state, node=None, prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a
+2026-05-24 16:17:05 | INFO     | WS msg: type=executed, node=16, prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a
+2026-05-24 16:17:05 | INFO     | WS msg: type=progress_state, node=None, prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a
+2026-05-24 16:17:05 | INFO     | WS msg: type=execution_success, node=None, prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a
+2026-05-24 16:17:05 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:17:05 | INFO     | WS msg: type=executing, node=None, prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a
+2026-05-24 16:17:05 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:17:05 | INFO     | WS msg: type=execution_start, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:17:05 | INFO     | WS msg: type=execution_cached, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:17:05 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:17:05 | INFO     | WS msg: type=executing, node=5, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:17:10 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:17:10 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:17:10 | INFO     | WS msg: type=executing, node=4, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:17:33 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:17:33 | INFO     | WS msg: type=progress, node=4, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:17:56 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:17:56 | INFO     | WS msg: type=progress, node=4, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:18:13 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:18:13 | INFO     | WS msg: type=progress, node=4, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:18:26 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:18:26 | INFO     | WS msg: type=progress, node=4, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:18:37 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:18:37 | INFO     | WS msg: type=progress, node=4, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:18:48 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:18:48 | INFO     | WS msg: type=progress, node=4, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:18:59 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:18:59 | INFO     | WS msg: type=progress, node=4, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:11 | INFO     | WS msg: type=progress, node=4, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:11 | INFO     | WS msg: type=executing, node=8, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:13 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:14 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:14 | INFO     | WS msg: type=executing, node=9, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:14 | INFO     | WS msg: type=executed, node=9, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:14 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:14 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:14 | INFO     | WS msg: type=executing, node=15, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:16 | INFO     | WS msg: type=executing, node=16, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:16 | INFO     | WS msg: type=executed, node=16, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:16 | INFO     | WS msg: type=execution_success, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:17 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:19:17 | INFO     | WS msg: type=executing, node=None, prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16
+2026-05-24 16:19:17 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:19:17 | INFO     | WS msg: type=execution_start, node=None, prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29
+2026-05-24 16:19:17 | INFO     | WS msg: type=execution_cached, node=None, prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29
+2026-05-24 16:19:17 | INFO     | WS msg: type=executed, node=9, prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29
+2026-05-24 16:19:17 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29
+2026-05-24 16:19:17 | INFO     | WS msg: type=executed, node=16, prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29
+2026-05-24 16:19:17 | INFO     | WS msg: type=progress_state, node=None, prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29
+2026-05-24 16:19:17 | INFO     | WS msg: type=execution_success, node=None, prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29
+2026-05-24 16:19:17 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:19:17 | INFO     | WS msg: type=executing, node=None, prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29
+2026-05-24 16:19:17 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:19:17 | INFO     | WS msg: type=execution_start, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:17 | INFO     | WS msg: type=execution_cached, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:17 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:17 | INFO     | WS msg: type=executing, node=5, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:20 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:20 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:20 | INFO     | WS msg: type=executing, node=4, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:34 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:34 | INFO     | WS msg: type=progress, node=4, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:46 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:46 | INFO     | WS msg: type=progress, node=4, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:19:57 | INFO     | WS msg: type=progress, node=4, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:09 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:09 | INFO     | WS msg: type=progress, node=4, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:20 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:20 | INFO     | WS msg: type=progress, node=4, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:33 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:33 | INFO     | WS msg: type=progress, node=4, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:45 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:45 | INFO     | WS msg: type=progress, node=4, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:57 | INFO     | WS msg: type=progress, node=4, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:57 | INFO     | WS msg: type=executing, node=8, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:59 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:59 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:59 | INFO     | WS msg: type=executing, node=9, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:59 | INFO     | WS msg: type=executed, node=9, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:59 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:59 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:20:59 | INFO     | WS msg: type=executing, node=15, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:21:02 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:21:02 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:21:02 | INFO     | WS msg: type=executing, node=16, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:21:02 | INFO     | WS msg: type=executed, node=16, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:21:02 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:21:02 | INFO     | WS msg: type=execution_success, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:21:02 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:21:02 | INFO     | WS msg: type=executing, node=None, prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:21:02 | INFO     | Generation completed via WebSocket: prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36
+2026-05-24 16:21:03 | INFO     | Downloaded 2 image(s) for prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36 (attempt 1)
+2026-05-24 16:21:03 | INFO     | Saved: preview=output\2026-05-24\162103_42_untitled\preview.png, metadata=output\2026-05-24\162103_42_untitled\metadata.json
+2026-05-24 16:21:03 | INFO     | Generation completed: prompt_id=8b57b074-70a4-4bf6-9653-39a892331a36, seed=42, gen_time=310.72s, total_time=310.92s
+2026-05-24 16:23:19 | INFO     | Request received: text='青山集', style='国风书法，墨色渐变，金色描边，梅花装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:23:19 | INFO     | WebSocket connected, waiting for prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:23:19 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:23:19 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 16:23:22 | INFO     | WS msg: type=progress_state, node=None, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:23:22 | INFO     | WS msg: type=progress_state, node=None, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:23:22 | INFO     | WS msg: type=executing, node=4, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:23:34 | INFO     | WS msg: type=progress_state, node=None, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:23:34 | INFO     | WS msg: type=progress, node=4, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:23:45 | INFO     | WS msg: type=progress_state, node=None, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:23:45 | INFO     | WS msg: type=progress, node=4, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:23:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:23:57 | INFO     | WS msg: type=progress, node=4, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:24:08 | INFO     | WS msg: type=progress_state, node=None, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:24:08 | INFO     | WS msg: type=progress, node=4, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:24:19 | INFO     | WS msg: type=progress_state, node=None, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:24:19 | INFO     | WS msg: type=progress, node=4, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:24:30 | INFO     | WS msg: type=progress_state, node=None, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:24:30 | INFO     | WS msg: type=progress, node=4, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:24:41 | INFO     | WS msg: type=progress_state, node=None, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:24:41 | INFO     | WS msg: type=progress, node=4, prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67
+2026-05-24 16:24:45 | WARNING  | WebSocket wait timed out after 600s, falling back to polling
+2026-05-24 16:24:45 | INFO     | Polling history for prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed (timeout=600s)
+2026-05-24 16:24:47 | INFO     | History found for prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed via polling
+2026-05-24 16:24:47 | INFO     | Downloaded 2 image(s) for prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed (attempt 1)
+2026-05-24 16:24:47 | INFO     | Saved: preview=output\2026-05-24\162447_42_untitled\preview.png, metadata=output\2026-05-24\162447_42_untitled\metadata.json
+2026-05-24 16:24:47 | INFO     | Generation completed: prompt_id=7a0f29a7-100d-4f8b-843c-bb47f6349fed, seed=42, gen_time=607.64s, total_time=607.90s
+2026-05-24 16:24:48 | WARNING  | WebSocket wait timed out after 600s, falling back to polling
+2026-05-24 16:24:48 | INFO     | Polling history for prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a (timeout=600s)
+2026-05-24 16:24:50 | INFO     | History found for prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a via polling
+2026-05-24 16:24:50 | INFO     | Downloaded 2 image(s) for prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a (attempt 1)
+2026-05-24 16:24:50 | INFO     | Saved: preview=output\2026-05-24\162450_42_untitled\preview.png, metadata=output\2026-05-24\162450_42_untitled\metadata.json
+2026-05-24 16:24:50 | INFO     | Generation completed: prompt_id=826f8278-89c1-49be-83c9-f33d9374c34a, seed=42, gen_time=605.94s, total_time=606.22s
+2026-05-24 16:25:29 | WARNING  | WebSocket wait timed out after 600s, falling back to polling
+2026-05-24 16:25:29 | INFO     | Polling history for prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16 (timeout=600s)
+2026-05-24 16:25:31 | INFO     | History found for prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16 via polling
+2026-05-24 16:25:31 | INFO     | Downloaded 2 image(s) for prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16 (attempt 1)
+2026-05-24 16:25:31 | INFO     | Saved: preview=output\2026-05-24\162531_42_untitled\preview.png, metadata=output\2026-05-24\162531_42_untitled\metadata.json
+2026-05-24 16:25:31 | INFO     | Generation completed: prompt_id=1f71bb83-4e36-4eec-ab25-9c4661928b16, seed=42, gen_time=604.06s, total_time=604.31s
+2026-05-24 16:25:32 | WARNING  | WebSocket wait timed out after 600s, falling back to polling
+2026-05-24 16:25:32 | INFO     | Polling history for prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29 (timeout=600s)
+2026-05-24 16:25:34 | INFO     | History found for prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29 via polling
+2026-05-24 16:25:35 | INFO     | Downloaded 2 image(s) for prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29 (attempt 1)
+2026-05-24 16:25:35 | INFO     | Saved: preview=output\2026-05-24\162535_42_untitled\preview.png, metadata=output\2026-05-24\162535_42_untitled\metadata.json
+2026-05-24 16:25:35 | INFO     | Generation completed: prompt_id=7c96ede1-2949-4ca9-a8de-9ee9a66b9a29, seed=42, gen_time=606.25s, total_time=606.49s
+2026-05-24 16:33:22 | WARNING  | WebSocket wait timed out after 600s, falling back to polling
+2026-05-24 16:33:22 | INFO     | Polling history for prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67 (timeout=600s)
+2026-05-24 16:33:24 | INFO     | History found for prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67 via polling
+2026-05-24 16:33:24 | INFO     | Downloaded 2 image(s) for prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67 (attempt 1)
+2026-05-24 16:33:24 | INFO     | Saved: preview=output\2026-05-24\163324_42_untitled\preview.png, metadata=output\2026-05-24\163324_42_untitled\metadata.json
+2026-05-24 16:33:24 | INFO     | Generation completed: prompt_id=fdf0cb97-179d-4848-9f64-f5fb6737cc67, seed=42, gen_time=604.66s, total_time=604.86s
+2026-05-24 16:36:14 | INFO     | Request received: text='向阳而生', style='国风书法，墨色渐变，金色描边，梅花装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:36:14 | INFO     | WebSocket connected, waiting for prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:36:14 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:36:14 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 16:36:20 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:36:20 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:36:20 | INFO     | WS msg: type=executing, node=4, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:36:38 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:36:38 | INFO     | WS msg: type=progress, node=4, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:36:51 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:36:51 | INFO     | WS msg: type=progress, node=4, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:01 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:01 | INFO     | WS msg: type=progress, node=4, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:11 | INFO     | WS msg: type=progress, node=4, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:22 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:22 | INFO     | WS msg: type=progress, node=4, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:33 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:33 | INFO     | WS msg: type=progress, node=4, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:44 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:44 | INFO     | WS msg: type=progress, node=4, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:54 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:54 | INFO     | WS msg: type=progress, node=4, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:54 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:54 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:54 | INFO     | WS msg: type=executing, node=8, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:57 | INFO     | WS msg: type=executing, node=9, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:57 | INFO     | WS msg: type=executed, node=9, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:37:57 | INFO     | WS msg: type=executing, node=15, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:38:00 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:38:00 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:38:00 | INFO     | WS msg: type=executing, node=16, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:38:00 | INFO     | WS msg: type=executed, node=16, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:38:00 | INFO     | WS msg: type=progress_state, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:38:00 | INFO     | WS msg: type=execution_success, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:38:04 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:38:04 | INFO     | WS msg: type=executing, node=None, prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:38:04 | INFO     | Generation completed via WebSocket: prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5
+2026-05-24 16:38:04 | INFO     | Downloaded 2 image(s) for prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5 (attempt 1)
+2026-05-24 16:38:05 | INFO     | Saved: preview=output\2026-05-24\163804_42_untitled\preview.png, metadata=output\2026-05-24\163804_42_untitled\metadata.json
+2026-05-24 16:38:05 | INFO     | Generation completed: prompt_id=4dfa2e5a-87c9-4374-ba70-601bc6dfc5e5, seed=42, gen_time=110.60s, total_time=110.83s
+2026-05-24 16:38:45 | INFO     | Request received: text='向阳而生', style='海洋浪漫，蓝青渐变，海浪贝壳装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:38:45 | INFO     | WebSocket connected, waiting for prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:38:45 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:38:45 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 16:38:51 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:38:51 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:38:51 | INFO     | WS msg: type=executing, node=4, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:39:08 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:39:08 | INFO     | WS msg: type=progress, node=4, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:39:17 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:39:17 | INFO     | WS msg: type=progress, node=4, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:39:28 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:39:28 | INFO     | WS msg: type=progress, node=4, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:39:39 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:39:39 | INFO     | WS msg: type=progress, node=4, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:39:50 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:39:50 | INFO     | WS msg: type=progress, node=4, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:01 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:01 | INFO     | WS msg: type=progress, node=4, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:12 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:12 | INFO     | WS msg: type=progress, node=4, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:22 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:22 | INFO     | WS msg: type=progress, node=4, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:22 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:22 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:22 | INFO     | WS msg: type=executing, node=8, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:25 | INFO     | WS msg: type=executing, node=9, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:25 | INFO     | WS msg: type=executed, node=9, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:25 | INFO     | WS msg: type=executing, node=15, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:28 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:28 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:28 | INFO     | WS msg: type=executing, node=16, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:28 | INFO     | WS msg: type=executed, node=16, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:28 | INFO     | WS msg: type=progress_state, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:28 | INFO     | WS msg: type=execution_success, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:29 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:40:29 | INFO     | WS msg: type=executing, node=None, prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:29 | INFO     | Generation completed via WebSocket: prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2
+2026-05-24 16:40:29 | INFO     | Downloaded 2 image(s) for prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2 (attempt 1)
+2026-05-24 16:40:30 | INFO     | Saved: preview=output\2026-05-24\164029_42_untitled\preview.png, metadata=output\2026-05-24\164029_42_untitled\metadata.json
+2026-05-24 16:40:30 | INFO     | Generation completed: prompt_id=425adc13-6ebe-40d1-b6dd-2b62015055e2, seed=42, gen_time=104.53s, total_time=104.81s
+2026-05-24 16:42:11 | INFO     | Request received: text='freedom', style='海洋浪漫，蓝青渐变，海浪贝壳装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:42:11 | INFO     | WebSocket connected, waiting for prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:42:11 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:42:11 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 16:42:14 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:42:14 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:42:14 | INFO     | WS msg: type=executing, node=4, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:42:26 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:42:26 | INFO     | WS msg: type=progress, node=4, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:42:36 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:42:36 | INFO     | WS msg: type=progress, node=4, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:42:46 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:42:46 | INFO     | WS msg: type=progress, node=4, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:42:56 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:42:56 | INFO     | WS msg: type=progress, node=4, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:07 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:07 | INFO     | WS msg: type=progress, node=4, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:17 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:17 | INFO     | WS msg: type=progress, node=4, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:28 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:28 | INFO     | WS msg: type=progress, node=4, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:39 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:39 | INFO     | WS msg: type=progress, node=4, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:39 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:39 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:39 | INFO     | WS msg: type=executing, node=8, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:42 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:42 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:42 | INFO     | WS msg: type=executing, node=9, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:42 | INFO     | WS msg: type=executed, node=9, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:42 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:42 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:42 | INFO     | WS msg: type=executing, node=15, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:45 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:45 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:45 | INFO     | WS msg: type=executing, node=16, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:45 | INFO     | WS msg: type=executed, node=16, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:45 | INFO     | WS msg: type=progress_state, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:45 | INFO     | WS msg: type=execution_success, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:46 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:43:46 | INFO     | WS msg: type=executing, node=None, prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:46 | INFO     | Generation completed via WebSocket: prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a
+2026-05-24 16:43:47 | INFO     | Downloaded 2 image(s) for prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a (attempt 1)
+2026-05-24 16:43:47 | INFO     | Saved: preview=output\2026-05-24\164347_42_freedom\preview.png, metadata=output\2026-05-24\164347_42_freedom\metadata.json
+2026-05-24 16:43:47 | INFO     | Generation completed: prompt_id=ad98701b-d92e-4eb6-9882-861b45b8dd0a, seed=42, gen_time=95.73s, total_time=96.05s
+2026-05-24 16:45:16 | INFO     | Request received: text='To freedom', style='海洋浪漫，蓝青渐变，海浪贝壳装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:45:16 | INFO     | WebSocket connected, waiting for prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:45:16 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:45:16 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 16:45:19 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:45:19 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:45:19 | INFO     | WS msg: type=executing, node=4, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:45:22 | INFO     | Request received: text='To freedom', style='海洋浪漫，蓝青渐变，海浪贝壳装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:45:22 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:45:22 | INFO     | WebSocket connected, waiting for prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d
+2026-05-24 16:45:22 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:45:22 | INFO     | WS msg: type=executing, node=4, prompt_id=None
+2026-05-24 16:45:33 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:45:33 | INFO     | WS msg: type=progress, node=4, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:45:43 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:45:43 | INFO     | WS msg: type=progress, node=4, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:45:53 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:45:53 | INFO     | WS msg: type=progress, node=4, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:03 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:03 | INFO     | WS msg: type=progress, node=4, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:14 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:14 | INFO     | WS msg: type=progress, node=4, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:24 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:24 | INFO     | WS msg: type=progress, node=4, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:35 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:35 | INFO     | WS msg: type=progress, node=4, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:45 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:45 | INFO     | WS msg: type=progress, node=4, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:45 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:45 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:45 | INFO     | WS msg: type=executing, node=8, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:48 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:48 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:48 | INFO     | WS msg: type=executing, node=9, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:48 | INFO     | WS msg: type=executed, node=9, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:48 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:48 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:48 | INFO     | WS msg: type=executing, node=15, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:51 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:51 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:51 | INFO     | WS msg: type=executing, node=16, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:51 | INFO     | WS msg: type=executed, node=16, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:51 | INFO     | WS msg: type=progress_state, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:51 | INFO     | WS msg: type=execution_success, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:52 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:46:52 | INFO     | WS msg: type=executing, node=None, prompt_id=15196ca4-e635-470e-929c-f11459f05181
+2026-05-24 16:46:52 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:46:52 | INFO     | WS msg: type=execution_start, node=None, prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d
+2026-05-24 16:46:52 | INFO     | WS msg: type=execution_cached, node=None, prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d
+2026-05-24 16:46:52 | INFO     | WS msg: type=executed, node=9, prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d
+2026-05-24 16:46:52 | INFO     | WS msg: type=progress_state, node=None, prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d
+2026-05-24 16:46:52 | INFO     | WS msg: type=executed, node=16, prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d
+2026-05-24 16:46:52 | INFO     | WS msg: type=progress_state, node=None, prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d
+2026-05-24 16:46:52 | INFO     | WS msg: type=execution_success, node=None, prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d
+2026-05-24 16:46:52 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:46:52 | INFO     | WS msg: type=executing, node=None, prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d
+2026-05-24 16:46:52 | INFO     | Generation completed via WebSocket: prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d
+2026-05-24 16:46:53 | INFO     | Downloaded 2 image(s) for prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d (attempt 1)
+2026-05-24 16:46:53 | INFO     | Saved: preview=output\2026-05-24\164653_42_To_freedom\preview.png, metadata=output\2026-05-24\164653_42_To_freedom\metadata.json
+2026-05-24 16:46:53 | INFO     | Generation completed: prompt_id=f66f6593-5a91-4cba-8096-a32b10358e1d, seed=42, gen_time=90.94s, total_time=91.28s
+2026-05-24 16:50:20 | INFO     | Request received: text='To freedom', style='海洋浪漫，蓝青渐变，海浪贝壳装饰', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:50:20 | INFO     | WebSocket connected, waiting for prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:50:20 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:50:20 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 16:50:23 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:50:23 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:50:23 | INFO     | WS msg: type=executing, node=4, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:50:38 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:50:38 | INFO     | WS msg: type=progress, node=4, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:50:48 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:50:48 | INFO     | WS msg: type=progress, node=4, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:50:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:50:58 | INFO     | WS msg: type=progress, node=4, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:09 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:09 | INFO     | WS msg: type=progress, node=4, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:19 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:19 | INFO     | WS msg: type=progress, node=4, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:30 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:30 | INFO     | WS msg: type=progress, node=4, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:40 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:40 | INFO     | WS msg: type=progress, node=4, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:51 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:51 | INFO     | WS msg: type=progress, node=4, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:51 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:51 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:51 | INFO     | WS msg: type=executing, node=8, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:54 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:54 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:54 | INFO     | WS msg: type=executing, node=9, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:54 | INFO     | WS msg: type=executed, node=9, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:54 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:54 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:54 | INFO     | WS msg: type=executing, node=15, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:58 | INFO     | WS msg: type=executing, node=16, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:58 | INFO     | WS msg: type=executed, node=16, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:51:58 | INFO     | WS msg: type=execution_success, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:52:02 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:52:02 | INFO     | WS msg: type=executing, node=None, prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:52:03 | INFO     | Generation completed via WebSocket: prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299
+2026-05-24 16:52:03 | INFO     | Downloaded 2 image(s) for prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299 (attempt 1)
+2026-05-24 16:52:03 | INFO     | Saved: preview=output\2026-05-24\165203_42_To_freedom\preview.png, metadata=output\2026-05-24\165203_42_To_freedom\metadata.json
+2026-05-24 16:52:03 | INFO     | Generation completed: prompt_id=65141d51-c47f-4b3e-b677-e575a8f6e299, seed=42, gen_time=102.68s, total_time=102.89s
+2026-05-24 16:52:19 | INFO     | Request received: text='To freedom', style='澄清蓝调渐变，海浪纹理环绕字体，珍珠细碎浪花气泡点缀，柔光氛围感', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:52:19 | INFO     | WebSocket connected, waiting for prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:52:19 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:52:19 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 16:52:24 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:52:24 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:52:24 | INFO     | WS msg: type=executing, node=4, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:52:41 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:52:41 | INFO     | WS msg: type=progress, node=4, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:52:51 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:52:51 | INFO     | WS msg: type=progress, node=4, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:02 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:02 | INFO     | WS msg: type=progress, node=4, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:12 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:12 | INFO     | WS msg: type=progress, node=4, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:23 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:23 | INFO     | WS msg: type=progress, node=4, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:34 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:34 | INFO     | WS msg: type=progress, node=4, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:44 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:44 | INFO     | WS msg: type=progress, node=4, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:55 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:55 | INFO     | WS msg: type=progress, node=4, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:55 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:55 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:55 | INFO     | WS msg: type=executing, node=8, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:58 | INFO     | WS msg: type=executing, node=9, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:58 | INFO     | WS msg: type=executed, node=9, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:58 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:53:58 | INFO     | WS msg: type=executing, node=15, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:54:01 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:54:01 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:54:01 | INFO     | WS msg: type=executing, node=16, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:54:01 | INFO     | WS msg: type=executed, node=16, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:54:01 | INFO     | WS msg: type=progress_state, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:54:01 | INFO     | WS msg: type=execution_success, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:54:02 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:54:02 | INFO     | WS msg: type=executing, node=None, prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:54:02 | INFO     | Generation completed via WebSocket: prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b
+2026-05-24 16:54:03 | INFO     | Downloaded 2 image(s) for prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b (attempt 1)
+2026-05-24 16:54:03 | INFO     | Saved: preview=output\2026-05-24\165403_42_To_freedom\preview.png, metadata=output\2026-05-24\165403_42_To_freedom\metadata.json
+2026-05-24 16:54:03 | INFO     | Generation completed: prompt_id=389b9b01-1114-413b-a420-31e3cc643d8b, seed=42, gen_time=103.56s, total_time=103.84s
+2026-05-24 16:55:19 | INFO     | Request received: text='向阳而生', style='国风书法，墨色渐变，金色描边，梅花装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 16:55:19 | INFO     | WebSocket connected, waiting for prompt_id=c85ee009-04bb-438e-ba12-a3809f60252a
+2026-05-24 16:55:19 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 16:55:19 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 16:55:22 | WARNING  | WebSocket wait timed out after 600s, falling back to polling
+2026-05-24 16:55:22 | INFO     | Polling history for prompt_id=15196ca4-e635-470e-929c-f11459f05181 (timeout=600s)
+2026-05-24 16:55:24 | INFO     | History found for prompt_id=15196ca4-e635-470e-929c-f11459f05181 via polling
+2026-05-24 16:55:25 | INFO     | Downloaded 2 image(s) for prompt_id=15196ca4-e635-470e-929c-f11459f05181 (attempt 1)
+2026-05-24 16:55:25 | INFO     | Saved: preview=output\2026-05-24\165525_42_To_freedom\preview.png, metadata=output\2026-05-24\165525_42_To_freedom\metadata.json
+2026-05-24 16:55:25 | INFO     | Generation completed: prompt_id=15196ca4-e635-470e-929c-f11459f05181, seed=42, gen_time=608.44s, total_time=608.77s
+2026-05-24 17:05:20 | WARNING  | WebSocket wait timed out after 600s, falling back to polling
+2026-05-24 17:05:20 | INFO     | Polling history for prompt_id=c85ee009-04bb-438e-ba12-a3809f60252a (timeout=600s)
+2026-05-24 17:05:22 | INFO     | History found for prompt_id=c85ee009-04bb-438e-ba12-a3809f60252a via polling
+2026-05-24 17:05:22 | INFO     | Downloaded 2 image(s) for prompt_id=c85ee009-04bb-438e-ba12-a3809f60252a (attempt 1)
+2026-05-24 17:05:22 | INFO     | Saved: preview=output\2026-05-24\170522_42_untitled\preview.png, metadata=output\2026-05-24\170522_42_untitled\metadata.json
+2026-05-24 17:05:22 | INFO     | Generation completed: prompt_id=c85ee009-04bb-438e-ba12-a3809f60252a, seed=42, gen_time=602.75s, total_time=602.97s
+2026-05-24 17:08:12 | INFO     | Request received: text='向阳而生', style='暖金色日光渐变，缠绕向日葵，向阳花藤，柔光光晕，暖黄橘色主调，清新治愈', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 17:08:12 | INFO     | WebSocket connected, waiting for prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:08:12 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:08:12 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 17:08:12 | INFO     | WS msg: type=executing, node=5, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:08:18 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:08:18 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:08:18 | INFO     | WS msg: type=executing, node=4, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:08:39 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:08:39 | INFO     | WS msg: type=progress, node=4, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:09:00 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:09:00 | INFO     | WS msg: type=progress, node=4, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:09:15 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:09:15 | INFO     | WS msg: type=progress, node=4, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:09:49 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:09:49 | INFO     | WS msg: type=progress, node=4, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:10:14 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:10:14 | INFO     | WS msg: type=progress, node=4, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:11:40 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:11:40 | INFO     | WS msg: type=progress, node=4, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:12:26 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:12:26 | INFO     | WS msg: type=progress, node=4, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:11 | INFO     | WS msg: type=progress, node=4, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:11 | INFO     | WS msg: type=executing, node=8, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:16 | INFO     | WS msg: type=executing, node=9, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:16 | INFO     | WS msg: type=executed, node=9, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:16 | INFO     | WS msg: type=executing, node=15, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:19 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:19 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:19 | INFO     | WS msg: type=executing, node=16, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:20 | INFO     | WS msg: type=executed, node=16, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:20 | INFO     | WS msg: type=progress_state, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:20 | INFO     | WS msg: type=execution_success, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:24 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:13:24 | INFO     | WS msg: type=executing, node=None, prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:24 | INFO     | Generation completed via WebSocket: prompt_id=603fdad2-ed74-4153-91d7-72be916039a8
+2026-05-24 17:13:24 | INFO     | Downloaded 2 image(s) for prompt_id=603fdad2-ed74-4153-91d7-72be916039a8 (attempt 1)
+2026-05-24 17:13:25 | INFO     | Saved: preview=output\2026-05-24\171324_42_untitled\preview.png, metadata=output\2026-05-24\171324_42_untitled\metadata.json
+2026-05-24 17:13:25 | INFO     | Generation completed: prompt_id=603fdad2-ed74-4153-91d7-72be916039a8, seed=42, gen_time=312.07s, total_time=312.39s
+2026-05-24 17:17:17 | INFO     | Request received: text='毕业 HAPPY', style='浅粉加浅蓝渐变，飘飞纸飞机、彩带、小气球点缀，柔和自然光，青春元气，简约清新', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 17:17:17 | INFO     | WebSocket connected, waiting for prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:17:17 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:17:17 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 17:17:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:17:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:17:25 | INFO     | WS msg: type=executing, node=4, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:17:49 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:17:49 | INFO     | WS msg: type=progress, node=4, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:17:59 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:17:59 | INFO     | WS msg: type=progress, node=4, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:18:09 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:18:09 | INFO     | WS msg: type=progress, node=4, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:18:20 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:18:20 | INFO     | WS msg: type=progress, node=4, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:18:31 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:18:31 | INFO     | WS msg: type=progress, node=4, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:18:42 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:18:42 | INFO     | WS msg: type=progress, node=4, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:18:52 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:18:52 | INFO     | WS msg: type=progress, node=4, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:04 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:04 | INFO     | WS msg: type=progress, node=4, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:04 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:04 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:04 | INFO     | WS msg: type=executing, node=8, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:09 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:09 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:09 | INFO     | WS msg: type=executing, node=9, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:09 | INFO     | WS msg: type=executed, node=9, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:09 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:09 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:09 | INFO     | WS msg: type=executing, node=15, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:13 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:13 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:13 | INFO     | WS msg: type=executing, node=16, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:13 | INFO     | WS msg: type=executed, node=16, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:13 | INFO     | WS msg: type=progress_state, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:13 | INFO     | WS msg: type=execution_success, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:18 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:19:18 | INFO     | WS msg: type=executing, node=None, prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:18 | INFO     | Generation completed via WebSocket: prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d
+2026-05-24 17:19:18 | INFO     | Downloaded 2 image(s) for prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d (attempt 1)
+2026-05-24 17:19:18 | INFO     | Saved: preview=output\2026-05-24\171918_42_HAPPY\preview.png, metadata=output\2026-05-24\171918_42_HAPPY\metadata.json
+2026-05-24 17:19:18 | INFO     | Generation completed: prompt_id=db451d12-6c49-4ba4-8f97-03a549a1ca9d, seed=42, gen_time=121.16s, total_time=121.41s
+2026-05-24 17:21:17 | INFO     | Request received: text='毕业 HAPPY', style='复古花体艺术字“毕业HAPPY”，浅粉加浅蓝渐变，飘飞纸飞机、彩带、小气球点缀，柔和自然光，青春元气，简约清新', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 17:21:17 | INFO     | WebSocket connected, waiting for prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:21:17 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:21:17 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 17:21:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:21:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:21:25 | INFO     | WS msg: type=executing, node=4, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:21:46 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:21:46 | INFO     | WS msg: type=progress, node=4, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:21:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:21:57 | INFO     | WS msg: type=progress, node=4, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:22:16 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:22:16 | INFO     | WS msg: type=progress, node=4, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:22:36 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:22:36 | INFO     | WS msg: type=progress, node=4, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:22:48 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:22:48 | INFO     | WS msg: type=progress, node=4, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:00 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:00 | INFO     | WS msg: type=progress, node=4, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:11 | INFO     | WS msg: type=progress, node=4, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:23 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:23 | INFO     | WS msg: type=progress, node=4, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:23 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:23 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:23 | INFO     | WS msg: type=executing, node=8, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:27 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:27 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:27 | INFO     | WS msg: type=executing, node=9, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:28 | INFO     | WS msg: type=executed, node=9, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:28 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:28 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:28 | INFO     | WS msg: type=executing, node=15, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:31 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:31 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:31 | INFO     | WS msg: type=executing, node=16, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:31 | INFO     | WS msg: type=executed, node=16, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:31 | INFO     | WS msg: type=progress_state, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:31 | INFO     | WS msg: type=execution_success, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:34 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:23:34 | INFO     | WS msg: type=executing, node=None, prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:34 | INFO     | Generation completed via WebSocket: prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02
+2026-05-24 17:23:34 | INFO     | Downloaded 2 image(s) for prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02 (attempt 1)
+2026-05-24 17:23:35 | INFO     | Saved: preview=output\2026-05-24\172334_42_HAPPY\preview.png, metadata=output\2026-05-24\172334_42_HAPPY\metadata.json
+2026-05-24 17:23:35 | INFO     | Generation completed: prompt_id=e49db895-377f-4ad3-acbb-0ed34a745b02, seed=42, gen_time=137.67s, total_time=137.97s
+2026-05-24 17:24:54 | INFO     | Request received: text='艺术字“向阳生”', style='国风书法，墨色渐变，金色描边，梅花装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 17:24:54 | INFO     | WebSocket connected, waiting for prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:24:54 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:24:54 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 17:24:56 | INFO     | Request received: text='艺术字“向阳生”', style='国风书法，墨色渐变，金色描边，梅花装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 17:24:56 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:24:56 | INFO     | WebSocket connected, waiting for prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a
+2026-05-24 17:24:56 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:24:56 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 17:24:59 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:24:59 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:24:59 | INFO     | WS msg: type=executing, node=4, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:25:18 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:25:18 | INFO     | WS msg: type=progress, node=4, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:25:33 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:25:33 | INFO     | WS msg: type=progress, node=4, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:25:44 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:25:44 | INFO     | WS msg: type=progress, node=4, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:25:55 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:25:55 | INFO     | WS msg: type=progress, node=4, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:07 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:07 | INFO     | WS msg: type=progress, node=4, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:23 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:23 | INFO     | WS msg: type=progress, node=4, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:36 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:36 | INFO     | WS msg: type=progress, node=4, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:49 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:49 | INFO     | WS msg: type=progress, node=4, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:49 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:49 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:49 | INFO     | WS msg: type=executing, node=8, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:53 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:53 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:53 | INFO     | WS msg: type=executing, node=9, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:54 | INFO     | WS msg: type=executed, node=9, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:54 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:54 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:54 | INFO     | WS msg: type=executing, node=15, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:57 | INFO     | WS msg: type=executing, node=16, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:57 | INFO     | WS msg: type=executed, node=16, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:57 | INFO     | WS msg: type=progress_state, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:57 | INFO     | WS msg: type=execution_success, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:59 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:26:59 | INFO     | WS msg: type=executing, node=None, prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f
+2026-05-24 17:26:59 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:26:59 | INFO     | WS msg: type=execution_start, node=None, prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a
+2026-05-24 17:26:59 | INFO     | WS msg: type=execution_cached, node=None, prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a
+2026-05-24 17:26:59 | INFO     | WS msg: type=executed, node=9, prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a
+2026-05-24 17:26:59 | INFO     | WS msg: type=progress_state, node=None, prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a
+2026-05-24 17:26:59 | INFO     | WS msg: type=executed, node=16, prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a
+2026-05-24 17:26:59 | INFO     | WS msg: type=progress_state, node=None, prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a
+2026-05-24 17:26:59 | INFO     | WS msg: type=execution_success, node=None, prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a
+2026-05-24 17:26:59 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:26:59 | INFO     | WS msg: type=executing, node=None, prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a
+2026-05-24 17:26:59 | INFO     | Generation completed via WebSocket: prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a
+2026-05-24 17:26:59 | INFO     | Downloaded 2 image(s) for prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a (attempt 1)
+2026-05-24 17:26:59 | INFO     | Saved: preview=output\2026-05-24\172659_42_untitled\preview.png, metadata=output\2026-05-24\172659_42_untitled\metadata.json
+2026-05-24 17:26:59 | INFO     | Generation completed: prompt_id=5c3a1b85-ea56-4663-ac92-bdc61e4b6a8a, seed=42, gen_time=123.00s, total_time=123.21s
+2026-05-24 17:27:58 | INFO     | Request received: text='艺术字“向阳而生”', style='国风书法，墨色渐变，金色描边，梅花装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 17:27:58 | INFO     | WebSocket connected, waiting for prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:27:58 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:27:58 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 17:28:08 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:28:08 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:28:08 | INFO     | WS msg: type=executing, node=4, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:28:30 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:28:30 | INFO     | WS msg: type=progress, node=4, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:28:40 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:28:40 | INFO     | WS msg: type=progress, node=4, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:28:52 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:28:52 | INFO     | WS msg: type=progress, node=4, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:29:04 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:29:04 | INFO     | WS msg: type=progress, node=4, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:30:07 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:30:07 | INFO     | WS msg: type=progress, node=4, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:30:55 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:30:55 | INFO     | WS msg: type=progress, node=4, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:31:28 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:31:28 | INFO     | WS msg: type=progress, node=4, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:21 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:21 | INFO     | WS msg: type=progress, node=4, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:21 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:21 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:21 | INFO     | WS msg: type=executing, node=8, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:25 | INFO     | WS msg: type=executing, node=9, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:25 | INFO     | WS msg: type=executed, node=9, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:25 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:25 | INFO     | WS msg: type=executing, node=15, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:29 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:29 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:29 | INFO     | WS msg: type=executing, node=16, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:30 | INFO     | WS msg: type=executed, node=16, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:30 | INFO     | WS msg: type=progress_state, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:30 | INFO     | WS msg: type=execution_success, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:33 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:32:33 | INFO     | WS msg: type=executing, node=None, prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:33 | INFO     | Generation completed via WebSocket: prompt_id=03692769-efee-4e19-a6d3-408a19ffc241
+2026-05-24 17:32:34 | INFO     | Downloaded 2 image(s) for prompt_id=03692769-efee-4e19-a6d3-408a19ffc241 (attempt 1)
+2026-05-24 17:32:34 | INFO     | Saved: preview=output\2026-05-24\173234_42_untitled\preview.png, metadata=output\2026-05-24\173234_42_untitled\metadata.json
+2026-05-24 17:32:34 | INFO     | Generation completed: prompt_id=03692769-efee-4e19-a6d3-408a19ffc241, seed=42, gen_time=275.45s, total_time=275.65s
+2026-05-24 17:34:06 | INFO     | Request received: text='艺术字“向阳而生2.0”', style='海洋浪漫，蓝青渐变，海浪贝壳装饰，透明背景', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-24 17:34:06 | INFO     | WebSocket connected, waiting for prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d
+2026-05-24 17:34:06 | INFO     | WS msg: type=status, node=None, prompt_id=None
+2026-05-24 17:34:06 | INFO     | WS msg: type=executing, node=5, prompt_id=None
+2026-05-24 17:34:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d
+2026-05-24 17:34:11 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d
+2026-05-24 17:34:11 | INFO     | WS msg: type=executing, node=4, prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d
+2026-05-24 17:34:31 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d
+2026-05-24 17:34:31 | INFO     | WS msg: type=progress, node=4, prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d
+2026-05-24 17:34:43 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d
+2026-05-24 17:34:43 | INFO     | WS msg: type=progress, node=4, prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d
+2026-05-24 17:34:55 | INFO     | WS msg: type=progress_state, node=None, prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d
+2026-05-24 17:34:55 | INFO     | WS msg: type=progress, node=4, prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d
+2026-05-24 17:34:57 | WARNING  | WebSocket wait timed out after 600s, falling back to polling
+2026-05-24 17:34:57 | INFO     | Polling history for prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f (timeout=600s)
+2026-05-24 17:34:59 | INFO     | History found for prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f via polling
+2026-05-24 17:34:59 | INFO     | Downloaded 2 image(s) for prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f (attempt 1)
+2026-05-24 17:34:59 | INFO     | Saved: preview=output\2026-05-24\173459_42_untitled\preview.png, metadata=output\2026-05-24\173459_42_untitled\metadata.json
+2026-05-24 17:34:59 | INFO     | Generation completed: prompt_id=a76d1f77-331c-46bd-b430-0d42abd17f1f, seed=42, gen_time=604.51s, total_time=604.73s
+2026-05-24 17:44:15 | WARNING  | WebSocket wait timed out after 600s, falling back to polling
+2026-05-24 17:44:15 | INFO     | Polling history for prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d (timeout=600s)
+2026-05-24 17:44:17 | INFO     | History found for prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d via polling
+2026-05-24 17:44:17 | INFO     | Downloaded 2 image(s) for prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d (attempt 1)
+2026-05-24 17:44:18 | INFO     | Saved: preview=output\2026-05-24\174417_42_20\preview.png, metadata=output\2026-05-24\174417_42_20\metadata.json
+2026-05-24 17:44:18 | INFO     | Generation completed: prompt_id=8fdb97f5-d211-46d3-b904-0a840c3c370d, seed=42, gen_time=611.84s, total_time=612.10s

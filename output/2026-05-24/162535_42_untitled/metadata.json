@@ -1,0 +1,15 @@
+{
+  "prompt_id": "7c96ede1-2949-4ca9-a8de-9ee9a66b9a29",
+  "text": "七里香",
+  "style_prompt": "默认艺术风格",
+  "negative_prompt": "模糊，杂乱背景，错误文字",
+  "seed": 42,
+  "width": 1024,
+  "height": 1024,
+  "steps": 8,
+  "cfg": 1.1,
+  "sampler_name": "euler",
+  "scheduler": "sgm_uniform",
+  "timestamp_utc": "2026-05-24T08:25:35Z",
+  "generation_time_seconds": 606.25
+}

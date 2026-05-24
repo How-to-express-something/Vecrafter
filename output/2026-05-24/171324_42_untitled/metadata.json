@@ -1,0 +1,15 @@
+{
+  "prompt_id": "603fdad2-ed74-4153-91d7-72be916039a8",
+  "text": "向阳而生",
+  "style_prompt": "暖金色日光渐变，缠绕向日葵，向阳花藤，柔光光晕，暖黄橘色主调，清新治愈",
+  "negative_prompt": "模糊，杂乱背景，错误文字",
+  "seed": 42,
+  "width": 1024,
+  "height": 1024,
+  "steps": 8,
+  "cfg": 1.1,
+  "sampler_name": "euler",
+  "scheduler": "sgm_uniform",
+  "timestamp_utc": "2026-05-24T09:13:24Z",
+  "generation_time_seconds": 312.07
+}

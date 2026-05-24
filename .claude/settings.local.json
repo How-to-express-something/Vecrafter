@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install *)",
+      "Bash(python -c \"import py_compile; py_compile.compile\\('c:/commonfiles/Vecrafter/back_end/main.py', doraise=True\\); print\\('backend OK'\\)\")",
+      "Bash(python -c \"import py_compile; py_compile.compile\\('c:/commonfiles/Vecrafter/front_end/Vecrafter.py', doraise=True\\); print\\('frontend OK'\\)\")",
+      "Bash(python -c ' *)"
+    ]
+  }
+}

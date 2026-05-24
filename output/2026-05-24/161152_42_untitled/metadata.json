@@ -1,0 +1,15 @@
+{
+  "prompt_id": "2d65998f-a677-48f3-9910-e5d67ebcdad5",
+  "text": "夏日雪糕",
+  "style_prompt": "果冻质感的卡通文字写着“SUMMER SALE”。冷色调的蓝色和薄荷绿。边缘有融化效果。周围环绕着卡通冰棍、冰块和飞溅的柠檬水。Q弹、柔和、3D渲染、C4D风格、明亮的影棚光、柔和粉彩背景。",
+  "negative_prompt": "模糊，杂乱背景，错误文字",
+  "seed": 42,
+  "width": 1024,
+  "height": 1024,
+  "steps": 8,
+  "cfg": 1.1,
+  "sampler_name": "euler",
+  "scheduler": "sgm_uniform",
+  "timestamp_utc": "2026-05-24T08:11:52Z",
+  "generation_time_seconds": 194.24
+}
