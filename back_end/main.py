@@ -15,11 +15,28 @@ from pathlib import Path
 from datetime import datetime, timezone
 from logging.handlers import RotatingFileHandler
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 import uvicorn
+
+from image_preprocessor import (
+    ImagePreprocessor,
+    PreprocessConfig,
+    PreprocessResult,
+    AspectRatioPreset,
+    OutputFormat,
+    ResizeMode,
+)
+from vector_converter import (
+    VectorConverter,
+    VectorizationConfig,
+    VectorizationResult,
+    ColorQuantMethod,
+    PathFittingMethod,
+    ContourMethod,
+)
 
 
 # ======================= 项目路径 =======================
@@ -270,6 +287,8 @@ _config_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "co
 DEFAULT_WORKFLOW = os.path.join(_config_dir, "CFG_test.json")
 
 wrapper = ComfyUIWrapper()
+preprocessor = ImagePreprocessor()
+vector_converter = VectorConverter()
 
 
 # ======================= 请求/响应模型 =======================
@@ -472,6 +491,173 @@ def generate_image(req: GenerateRequest):
             "Generation failed after %.2fs: %s | request text=%r",
             total_elapsed, str(e), req.text,
         )
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ======================= 预处理端点 =======================
+
+class PreprocessRequest(BaseModel):
+    """预处理请求"""
+    image_b64: str | None = None                           # base64 编码图像（与 image_path 二选一）
+    image_path: str | None = None                          # 服务器端文件路径（与 image_b64 二选一）
+    aspect_ratio: str = "1:1"                              # "1:1" / "16:9" / "3:2" / "9:16"
+    target_width: int = 1024
+    target_height: int = 1024
+    resize_mode: str = "fit"                               # "fit" / "fill" / "stretch"
+    remove_background: bool = True
+    edge_denoise: bool = True
+    subject_crop: bool = True
+    crop_padding: int = 16
+    color_quantize: bool = False
+    quantize_colors: int = 256
+    anti_alias: bool = True
+    output_format: str = "png_rgba"                        # "png_rgba" / "png_rgb" / "webp_rgba"
+
+
+class PreprocessResponse(BaseModel):
+    success: bool
+    image_b64: str | None = None                           # 处理后图像的 base64
+    original_size: tuple[int, int] | None = None
+    output_size: tuple[int, int] | None = None
+    bbox: tuple[int, int, int, int] | None = None         # 主体包围盒
+    detail: str | None = None
+
+
+@app.post("/preprocess")
+def preprocess_image(req: PreprocessRequest):
+    """对单张图像执行预处理流水线，返回带 Alpha 通道的结果"""
+    try:
+        # 加载图像
+        if req.image_b64:
+            img = Image.open(BytesIO(base64.b64decode(req.image_b64)))
+        elif req.image_path:
+            target = (_PROJECT_ROOT / req.image_path).resolve()
+            if not str(target).startswith(str(_PROJECT_ROOT.resolve())):
+                raise HTTPException(status_code=403, detail="Access denied")
+            img = Image.open(target)
+        else:
+            raise HTTPException(status_code=400, detail="image_b64 or image_path required")
+
+        # 构建配置
+        ar_map = {"1:1": AspectRatioPreset.SQUARE, "16:9": AspectRatioPreset.WIDESCREEN,
+                   "3:2": AspectRatioPreset.CLASSIC, "9:16": AspectRatioPreset.PORTRAIT}
+        rm_map = {"fit": ResizeMode.FIT, "fill": ResizeMode.FILL, "stretch": ResizeMode.STRETCH}
+        fmt_map = {"png_rgba": OutputFormat.PNG_RGBA, "png_rgb": OutputFormat.PNG_RGB, "webp_rgba": OutputFormat.WEBP_RGBA}
+
+        config = PreprocessConfig(
+            aspect_ratio=ar_map.get(req.aspect_ratio, AspectRatioPreset.SQUARE),
+            target_width=req.target_width,
+            target_height=req.target_height,
+            resize_mode=rm_map.get(req.resize_mode, ResizeMode.FIT),
+            remove_background=req.remove_background,
+            edge_denoise=req.edge_denoise,
+            subject_crop=req.subject_crop,
+            crop_padding=req.crop_padding,
+            color_quantize=req.color_quantize,
+            quantize_colors=req.quantize_colors,
+            anti_alias=req.anti_alias,
+            output_format=fmt_map.get(req.output_format, OutputFormat.PNG_RGBA),
+        )
+
+        result = preprocessor.process(img, config)
+
+        buf = BytesIO()
+        fmt = "PNG" if config.output_format != OutputFormat.WEBP_RGBA else "WEBP"
+        result.image.save(buf, format=fmt)
+        img_b64 = base64.b64encode(buf.getvalue()).decode()
+
+        _logger.info("Preprocess done: %dx%d → %dx%d", *result.original_size, *result.output_size)
+
+        return PreprocessResponse(
+            success=True,
+            image_b64=img_b64,
+            original_size=result.original_size,
+            output_size=result.output_size,
+            bbox=result.bbox,
+            detail=f"Preprocessed: {result.original_size} → {result.output_size}",
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        _logger.error("Preprocess failed: %s", e)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ======================= 矢量化端点 =======================
+
+class VectorizeRequest(BaseModel):
+    """矢量化请求"""
+    image_b64: str | None = None                           # base64 编码图像
+    color_clusters: int = 8
+    smooth_threshold: float = 1.2
+    min_region_area: int = 16
+    path_precision: float = 0.5
+    preserve_gradient: bool = True
+    preserve_shadow: bool = True
+    embed_preview: bool = True                             # 是否在 SVG 中嵌入预览
+    output_preview_png: bool = False                       # 是否额外返回回渲染 PNG
+
+
+class VectorizeResponse(BaseModel):
+    success: bool
+    svg_string: str | None = None
+    preview_b64: str | None = None                         # 回渲染 PNG base64（可选）
+    total_paths: int = 0
+    total_vertices: int = 0
+    color_layer_count: int = 0
+    region_type_counts: dict[str, int] | None = None
+    warnings: list[str] | None = None
+    detail: str | None = None
+
+
+@app.post("/vectorize")
+def vectorize_image(req: VectorizeRequest):
+    """对艺术字 PNG/JPG 执行矢量化，返回 SVG 字符串"""
+    try:
+        if not req.image_b64:
+            raise HTTPException(status_code=400, detail="image_b64 is required")
+        img = Image.open(BytesIO(base64.b64decode(req.image_b64)))
+
+        config = VectorizationConfig(
+            color_clusters=req.color_clusters,
+            smooth_threshold=req.smooth_threshold,
+            min_region_area=req.min_region_area,
+            path_precision=req.path_precision,
+            preserve_gradient=req.preserve_gradient,
+            preserve_shadow=req.preserve_shadow,
+            embed_preview=req.embed_preview,
+        )
+
+        result = vector_converter.convert(img, config)
+
+        preview_b64: str | None = None
+        if req.output_preview_png and result.preview_image:
+            buf = BytesIO()
+            result.preview_image.save(buf, format="PNG")
+            preview_b64 = base64.b64encode(buf.getvalue()).decode()
+
+        _logger.info(
+            "Vectorize done: %d layers, %d paths, %d vertices",
+            len(result.color_layers), result.total_paths, result.total_vertices,
+        )
+
+        return VectorizeResponse(
+            success=True,
+            svg_string=result.svg_string,
+            preview_b64=preview_b64,
+            total_paths=result.total_paths,
+            total_vertices=result.total_vertices,
+            color_layer_count=len(result.color_layers),
+            region_type_counts=result.region_type_counts,
+            warnings=result.warnings if result.warnings else None,
+            detail=f"{len(result.color_layers)} color layers, {result.total_paths} paths",
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        _logger.error("Vectorize failed: %s", e)
         raise HTTPException(status_code=500, detail=str(e))
 
 

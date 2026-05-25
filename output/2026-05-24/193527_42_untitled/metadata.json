@@ -1,0 +1,15 @@
+{
+  "prompt_id": "751fcd89-8656-47d7-94e5-5dd70c884134",
+  "text": "艺术字“找婆娘”",
+  "style_prompt": "国风书法，墨色渐变，金色描边，梅花装饰，透明背景",
+  "negative_prompt": "模糊，杂乱背景，错误文字",
+  "seed": 42,
+  "width": 1024,
+  "height": 1024,
+  "steps": 8,
+  "cfg": 1.1,
+  "sampler_name": "euler",
+  "scheduler": "sgm_uniform",
+  "timestamp_utc": "2026-05-24T11:35:27Z",
+  "generation_time_seconds": 715.55
+}

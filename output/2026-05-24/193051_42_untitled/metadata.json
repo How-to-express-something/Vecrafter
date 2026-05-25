@@ -1,0 +1,15 @@
+{
+  "prompt_id": "6e556796-eae4-440c-9194-01fb6859663b",
+  "text": "青山集",
+  "style_prompt": "默认艺术风格",
+  "negative_prompt": "模糊，杂乱背景，错误文字",
+  "seed": 42,
+  "width": 1024,
+  "height": 1024,
+  "steps": 8,
+  "cfg": 1.1,
+  "sampler_name": "euler",
+  "scheduler": "sgm_uniform",
+  "timestamp_utc": "2026-05-24T11:30:51Z",
+  "generation_time_seconds": 603.35
+}
