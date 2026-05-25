@@ -385,7 +385,7 @@ class ImagePreprocessor:
         elif fmt_config == OutputFormat.PNG_RGB:
             result.image.convert("RGB").save(filepath, format="PNG")
         else:
-        result.image.save(filepath, format="PNG")
+            result.image.save(filepath, format="PNG")
 
         _logger.info("Saved preprocessed image to %s", filepath)
         return filepath
