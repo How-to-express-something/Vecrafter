@@ -179,17 +179,89 @@ class BackendAPI:
             return {"success": False, "error_msg": str(e)}
     
     @staticmethod
+    def preprocess_image(image_bytes: bytes, params: Dict) -> Dict:
+        """调用后端 /preprocess 端点进行图像预处理"""
+        try:
+            payload = {
+                "image_b64": base64.b64encode(image_bytes).decode(),
+                "aspect_ratio": params.get("aspect_ratio", "1:1"),
+                "target_width": params.get("target_width", 1024),
+                "target_height": params.get("target_height", 1024),
+                "resize_mode": params.get("resize_mode", "fit"),
+                "remove_background": params.get("remove_background", True),
+                "edge_denoise": params.get("edge_denoise", True),
+                "subject_crop": params.get("subject_crop", True),
+                "crop_padding": params.get("crop_padding", 16),
+                "color_quantize": params.get("color_quantize", False),
+                "quantize_colors": params.get("quantize_colors", 256),
+                "anti_alias": params.get("anti_alias", True),
+                "output_format": params.get("output_format", "png_rgba"),
+            }
+            resp = requests.post(
+                f"{BACKEND_URL}/preprocess",
+                json=payload,
+                timeout=600,
+            )
+            if resp.status_code != 200:
+                add_log(f"预处理失败: {resp.status_code}", level="ERROR")
+                return {"success": False, "error_msg": f"Preprocess error: {resp.text}"}
+            data = resp.json()
+            png_bytes = base64.b64decode(data["image_b64"]) if data.get("image_b64") else None
+            return {
+                "success": True,
+                "png_bytes": png_bytes,
+                "original_size": data.get("original_size"),
+                "output_size": data.get("output_size"),
+                "bbox": data.get("bbox"),
+            }
+        except requests.exceptions.ConnectionError:
+            add_log("无法连接后端服务", level="ERROR")
+            return {"success": False, "error_msg": "无法连接后端服务"}
+        except Exception as e:
+            add_log(f"预处理异常: {e}", level="ERROR")
+            return {"success": False, "error_msg": str(e)}
+
+    @staticmethod
     def vectorize_image(image_bytes: bytes, params: Dict) -> Dict:
-        time.sleep(0.8)
-        svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
-        <rect width="500" height="400" fill="transparent"/>
-        <g id="vector-result" fill="#8B5A2B" stroke="#D2B48C" stroke-width="2">
-            <path d="M100,100 L200,80 L300,130 L250,220 L150,200 Z"/>
-            <circle cx="350" cy="200" r="45"/>
-            <text x="120" y="320" font-family="'KaiTi'" font-size="36" fill="#5a3a1a">矢量提取模拟</text>
-        </g>
-        </svg>'''
-        return {"success": True, "svg_str": svg_content, "metadata": {"params": params}}
+        """调用后端 /vectorize 端点进行艺术字矢量化"""
+        try:
+            payload = {
+                "image_b64": base64.b64encode(image_bytes).decode(),
+                "color_clusters": params.get("color_k", 8),
+                "smooth_threshold": params.get("smooth", 1.2),
+                "min_region_area": params.get("min_region_area", 16),
+                "path_precision": params.get("path_precision", 0.5),
+                "preserve_gradient": params.get("preserve_gradient", True),
+                "preserve_shadow": params.get("preserve_shadow", True),
+                "embed_preview": params.get("embed_preview", True),
+                "output_preview_png": params.get("output_preview_png", False),
+            }
+            resp = requests.post(
+                f"{BACKEND_URL}/vectorize",
+                json=payload,
+                timeout=600,
+            )
+            if resp.status_code != 200:
+                add_log(f"矢量化失败: {resp.status_code}", level="ERROR")
+                return {"success": False, "error_msg": f"Vectorize error: {resp.text}"}
+            data = resp.json()
+            result = {
+                "success": True,
+                "svg_str": data.get("svg_string"),
+                "total_paths": data.get("total_paths", 0),
+                "color_layer_count": data.get("color_layer_count", 0),
+                "region_type_counts": data.get("region_type_counts"),
+                "warnings": data.get("warnings"),
+            }
+            if data.get("preview_b64"):
+                result["preview_bytes"] = base64.b64decode(data["preview_b64"])
+            return result
+        except requests.exceptions.ConnectionError:
+            add_log("无法连接后端服务", level="ERROR")
+            return {"success": False, "error_msg": "无法连接后端服务"}
+        except Exception as e:
+            add_log(f"矢量化异常: {e}", level="ERROR")
+            return {"success": False, "error_msg": str(e)}
 
 # ======================= 会话状态管理 =======================
 def init_session():

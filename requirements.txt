@@ -5,3 +5,6 @@ requests
 Pillow
 pydantic
 streamlit
+numpy
+rembg
+opencv-python
