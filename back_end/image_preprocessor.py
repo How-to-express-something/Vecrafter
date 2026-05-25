@@ -385,7 +385,7 @@ class ImagePreprocessor:
         elif fmt_config == OutputFormat.PNG_RGB:
             result.image.convert("RGB").save(filepath, format="PNG")
         else:
-            result.image.save(filepath, format="PNG")
+        result.image.save(filepath, format="PNG")
 
         _logger.info("Saved preprocessed image to %s", filepath)
         return filepath
@@ -422,6 +422,8 @@ class ImagePreprocessor:
         """计算 Alpha 通道非零区域的包围盒 (x, y, w, h)"""
         if image.mode != "RGBA":
             return None
+        # TODO: 使用 alpha 通道的 getbbox() 或 numpy 计算
+        return image.getbbox()
 
         bbox = image.getchannel("A").getbbox()
         if bbox is None:
