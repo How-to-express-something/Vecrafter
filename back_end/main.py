@@ -8,8 +8,8 @@ import os
 import re
 import logging
 from io import BytesIO
-from PIL import Image
-from typing import Dict, Any, List
+from PIL import Image, ImageFilter, ImageEnhance
+from typing import Dict, Any, List, Optional
 import threading
 from pathlib import Path
 from datetime import datetime, timezone
@@ -37,6 +37,7 @@ from vector_converter import (
     PathFittingMethod,
     ContourMethod,
 )
+from prompt_preprocessor import PromptPreprocessor
 
 
 # ======================= 项目路径 =======================
@@ -69,6 +70,67 @@ def make_slug(text: str, max_len: int = 16) -> str:
     safe = re.sub(r'[^a-zA-Z0-9 ]', '', text)
     slug = re.sub(r'\s+', '_', safe.strip())
     return slug[:max_len] if slug else "untitled"
+
+
+def _extract_model_info(workflow_path: str) -> Dict[str, str]:
+    """从 CFG_test.json 中提取模型名称与工作流版本"""
+    info: Dict[str, str] = {}
+    try:
+        with open(workflow_path, "r", encoding="utf-8") as f:
+            wf = json.load(f)
+        if "1" in wf and "inputs" in wf["1"]:
+            info["unet"] = wf["1"]["inputs"].get("unet_name", "")
+        if "2" in wf and "inputs" in wf["2"]:
+            info["clip"] = wf["2"]["inputs"].get("clip_name", "")
+        if "3" in wf and "inputs" in wf["3"]:
+            info["vae"] = wf["3"]["inputs"].get("vae_name", "")
+        wf_path = Path(workflow_path)
+        info["workflow"] = wf_path.name
+        for nid in ["4", "5", "6", "7"]:
+            if nid in wf:
+                info[f"node_{nid}"] = wf[nid].get("class_type", "")
+    except Exception as e:
+        _logger.warning("Failed to extract model info from workflow: %s", e)
+    return info
+
+
+def _post_process_image(image: Image.Image) -> Image.Image:
+    """对生成的 PNG 进行后处理优化，提升视觉质量
+
+    管线：
+      1. 锐化（Unsharp Mask）— 增强文字边缘清晰度
+      2. 对比度微调 — 让文字更醒目
+      3. 自动主体裁剪 — 去除多余空白
+
+    Args:
+        image: 输入的 RGBA PIL Image
+
+    Returns:
+        后处理后的 RGBA PIL Image
+    """
+    img = image.convert("RGBA")
+
+    # ---- 1. 锐化 ----
+    img = img.filter(ImageFilter.UnsharpMask(radius=1.0, percent=120, threshold=3))
+
+    # ---- 2. 对比度增强 ----
+    enhancer = ImageEnhance.Contrast(img)
+    img = enhancer.enhance(1.15)
+
+    # ---- 3. 自动主体裁剪（去除透明边缘） ----
+    alpha = img.split()[3]
+    bbox = alpha.getbbox()
+    if bbox:
+        padding = 16
+        x1, y1, x2, y2 = bbox
+        x1 = max(0, x1 - padding)
+        y1 = max(0, y1 - padding)
+        x2 = min(img.width, x2 + padding)
+        y2 = min(img.height, y2 + padding)
+        img = img.crop((x1, y1, x2, y2))
+
+    _logger.debug("Post-processed: size=%s", img.size)
+    return img
 
 
 # ======================= ComfyUI 封装 =======================
@@ -319,6 +381,18 @@ class GenerationMetadata(BaseModel):
     scheduler: str
     timestamp_utc: str
     generation_time_seconds: float
+    # 模型版本与工作流
+    model_unet: str = ""
+    model_clip: str = ""
+    model_vae: str = ""
+    workflow_file: str = ""
+    # 输出文件路径（相对于项目根目录）
+    original_path: str = ""
+    preview_path: str = ""
+    transparent_path: str = ""
+    svg_path: str = ""
+    metadata_path: str = ""
+    log_path: str = ""
 
 
 class GenerateResponse(BaseModel):
@@ -333,8 +407,28 @@ class GenerateResponse(BaseModel):
 def _save_result(
     images: List[Image.Image],
     metadata: GenerationMetadata,
-) -> tuple[str | None, str | None]:
-    """保存 preview.png 和 metadata.json 到磁盘。返回 (preview_path, metadata_path) 相对于项目根目录"""
+    transparent_image: Optional[Image.Image] = None,
+    svg_string: Optional[str] = None,
+) -> GenerationMetadata:
+    """保存所有结果文件到磁盘并更新 metadata 中的路径字段。
+
+    输出文件：
+      - original.png          原始生成图（与 preview.png 相同，为兼容性保留）
+      - preview.png           核心预览图
+      - transparent.png       透明背景版（去除背景后）
+      - result.svg            矢量图 SVG
+      - metadata.json         完整元数据 JSON
+      - run.log               本次生成的日志
+
+    Args:
+        images: ComfyUI 输出的图像列表
+        metadata: 生成元数据（会在原地更新路径字段）
+        transparent_image: 可选，预处理后的透明 PNG
+        svg_string: 可选，矢量化后的 SVG 字符串
+
+    Returns:
+        更新后的 metadata（路径字段已填充）
+    """
     slug = make_slug(metadata.text)
     ts_local = datetime.fromisoformat(metadata.timestamp_utc.replace("Z", "+00:00"))
     ts_local = ts_local.astimezone()
@@ -344,16 +438,92 @@ def _save_result(
     out_dir = _OUTPUT_DIR / date_dir / dir_name
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    # ---- 1. 原始生成图 + 预览图 ----
+    original_path = out_dir / "original.png"
     preview_path = out_dir / "preview.png"
+    images[0].save(original_path, format="PNG")
     images[0].save(preview_path, format="PNG")
 
+    # ---- 2. 透明 PNG ----
+    transparent_path: Optional[Path] = None
+    if transparent_image is not None:
+        transparent_path = out_dir / "transparent.png"
+        transparent_image.save(transparent_path, format="PNG")
+
+    # ---- 3. SVG ----
+    svg_path: Optional[Path] = None
+    if svg_string:
+        svg_path = out_dir / "result.svg"
+        svg_path.write_text(svg_string, encoding="utf-8")
+
+    # ---- 4. 元数据 JSON ----
     meta_path = out_dir / "metadata.json"
     with open(meta_path, "w", encoding="utf-8") as f:
         json.dump(metadata.model_dump(), f, ensure_ascii=False, indent=2)
 
-    rel_preview = str(preview_path.relative_to(_PROJECT_ROOT))
-    rel_meta = str(meta_path.relative_to(_PROJECT_ROOT))
-    return rel_preview, rel_meta
+    # ---- 5. 运行日志 ----
+    log_path = out_dir / "run.log"
+    _write_run_log(log_path, metadata)
+
+    # ---- 更新 metadata 中的路径字段 ----
+    rel = lambda p: str(p.relative_to(_PROJECT_ROOT))
+    metadata.original_path = rel(original_path)
+    metadata.preview_path = rel(preview_path)
+    metadata.transparent_path = rel(transparent_path) if transparent_path else ""
+    metadata.svg_path = rel(svg_path) if svg_path else ""
+    metadata.metadata_path = rel(meta_path)
+    metadata.log_path = rel(log_path)
+
+    _logger.info(
+        "Saved: original=%s, preview=%s, transparent=%s, svg=%s, metadata=%s, log=%s",
+        metadata.original_path, metadata.preview_path,
+        metadata.transparent_path or "(none)", metadata.svg_path or "(none)",
+        metadata.metadata_path, metadata.log_path,
+    )
+    return metadata
+
+
+def _write_run_log(log_path: Path, meta: GenerationMetadata) -> None:
+    """将本次运行的元数据以易读文本写入 run.log"""
+    lines = [
+        "=" * 50,
+        "Vecrafter Generation Run Log",
+        "=" * 50,
+        f"Text:          {meta.text}",
+        f"Style:         {meta.style_prompt}",
+        f"Negative:      {meta.negative_prompt}",
+        f"Seed:          {meta.seed}",
+        f"Resolution:    {meta.width}x{meta.height}",
+        f"Steps:         {meta.steps}",
+        f"CFG Scale:     {meta.cfg}",
+        f"Sampler:       {meta.sampler_name}",
+        f"Scheduler:     {meta.scheduler}",
+        f"Model UNet:    {meta.model_unet}",
+        f"Model CLIP:    {meta.model_clip}",
+        f"Model VAE:     {meta.model_vae}",
+        f"Workflow:      {meta.workflow_file}",
+        f"Prompt ID:     {meta.prompt_id}",
+        f"Timestamp:     {meta.timestamp_utc}",
+        f"Gen Time:      {meta.generation_time_seconds}s",
+        f"Original:      {meta.original_path}",
+        f"Preview:       {meta.preview_path}",
+        f"Transparent:   {meta.transparent_path or '(not generated)'}",
+        f"SVG:           {meta.svg_path or '(not generated)'}",
+        f"Metadata:      {meta.metadata_path}",
+        "-" * 50,
+        "Output files:",
+        f"  {meta.original_path}",
+        f"  {meta.preview_path}",
+        f"  {meta.metadata_path}",
+        f"  {log_path}",
+    ]
+    if meta.transparent_path:
+        lines.append(f"  {meta.transparent_path}")
+    if meta.svg_path:
+        lines.append(f"  {meta.svg_path}")
+    lines.append("=" * 50)
+
+    log_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 # ======================= 端点 =======================
@@ -364,7 +534,7 @@ def health():
 
 @app.get("/results")
 def list_results(limit: int = Query(20, ge=1, le=100)):
-    """列出 output/ 中所有历史生成结果，按时间降序"""
+    """列出 output/ 中所有历史生成结果，按时间降序，返回完整文件路径"""
     results = []
     if not _OUTPUT_DIR.exists():
         return results
@@ -382,24 +552,41 @@ def list_results(limit: int = Query(20, ge=1, le=100)):
                 meta = json.loads(meta_file.read_text(encoding="utf-8"))
             except (json.JSONDecodeError, IOError):
                 continue
-            meta["preview_path"] = str((run_dir / "preview.png").relative_to(_PROJECT_ROOT))
-            meta["metadata_path"] = str(meta_file.relative_to(_PROJECT_ROOT))
+            # 补充路径字段（兼容旧版 metadata.json 中缺失的字段）
+            rel = lambda name: str((run_dir / name).relative_to(_PROJECT_ROOT)) if (run_dir / name).exists() else None
+            for fname, key in [("preview.png", "preview_path"), ("original.png", "original_path"),
+                               ("transparent.png", "transparent_path"), ("result.svg", "svg_path"),
+                               ("metadata.json", "metadata_path"), ("run.log", "log_path")]:
+                if key not in meta or not meta.get(key):
+                    meta[key] = rel(fname)
             results.append(meta)
             if len(results) >= limit:
                 return results
     return results
 
 
-@app.get("/results/image")
-def serve_preview(path: str = Query(..., description="Relative path to preview.png")):
-    """提供预览图"""
+@app.get("/results/file")
+def serve_result_file(path: str = Query(..., description="Relative path under output/")):
+    """提供 output/ 目录下的任意结果文件（图片/SVG/日志/元数据）"""
     target = (_PROJECT_ROOT / path).resolve()
     # 安全检查：确保不越出 output/ 目录
     if not str(target).startswith(str(_OUTPUT_DIR.resolve())):
         raise HTTPException(status_code=403, detail="Access denied")
     if not target.exists():
-        raise HTTPException(status_code=404, detail="Image not found")
-    return StreamingResponse(target.open("rb"), media_type="image/png")
+        raise HTTPException(status_code=404, detail="File not found")
+
+    # MIME 类型映射
+    mime_map = {
+        ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+        ".svg": "image/svg+xml", ".json": "application/json",
+        ".log": "text/plain", ".txt": "text/plain",
+    }
+    mime = mime_map.get(target.suffix.lower(), "application/octet-stream")
+    headers = {}
+    if target.suffix.lower() not in (".png", ".jpg", ".jpeg", ".svg"):
+        headers["Content-Disposition"] = f'inline; filename="{target.name}"'
+
+    return StreamingResponse(target.open("rb"), media_type=mime, headers=headers)
 
 
 @app.post("/generate")
@@ -414,19 +601,26 @@ def generate_image(req: GenerateRequest):
     t_req_start = time.time()
 
     try:
-        positive = req.text
-        if req.style_prompt:
-            positive = f"{req.style_prompt},{req.text}"
+        # ---- Prompt 预处理 ----
+        positive = PromptPreprocessor.build_positive(req.text, req.style_prompt)
+        negative = PromptPreprocessor.build_negative(req.negative_prompt, req.text)
+        recommended_cfg = PromptPreprocessor.recommend_cfg(req.text)
+        _logger.info("Positive prompt: %s", positive[:200])
+        _logger.info("Negative prompt: %s", negative[:200])
+        _logger.info("Recommended CFG: %.2f (text_len=%d)", recommended_cfg, len(req.text))
+
+        # 使用推荐的 CFG（除非用户显式传了非默认值）
+        effective_cfg = recommended_cfg if req.cfg == 1.1 else req.cfg
 
         result = wrapper.generate(
             workflow_path=DEFAULT_WORKFLOW,
             positive_prompt=positive,
-            negative_prompt=req.negative_prompt,
+            negative_prompt=negative,
             width=req.width,
             height=req.height,
             seed=req.seed,
             steps=req.steps,
-            cfg=req.cfg,
+            cfg=effective_cfg,
             sampler_name=req.sampler_name,
             scheduler=req.scheduler,
         )
@@ -436,7 +630,18 @@ def generate_image(req: GenerateRequest):
             _logger.error("No images generated for prompt_id=%s", result["prompt_id"])
             raise HTTPException(status_code=500, detail="No images generated")
 
+        # ---- 后处理：锐化 + 对比度 + 自动裁剪 ----
+        try:
+            images[0] = _post_process_image(images[0])
+            _logger.info("Post-processing applied: %s", images[0].size)
+        except Exception as pe:
+            _logger.warning("Post-processing skipped: %s", pe)
+
         now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        # ---- 提取模型/工作流信息 ----
+        model_info = _extract_model_info(DEFAULT_WORKFLOW)
+
         metadata = GenerationMetadata(
             prompt_id=result["prompt_id"],
             text=req.text,
@@ -451,22 +656,58 @@ def generate_image(req: GenerateRequest):
             scheduler=result["scheduler"],
             timestamp_utc=now_utc,
             generation_time_seconds=result["elapsed_seconds"],
+            model_unet=model_info.get("unet", ""),
+            model_clip=model_info.get("clip", ""),
+            model_vae=model_info.get("vae", ""),
+            workflow_file=model_info.get("workflow", ""),
         )
 
+        # ---- 生成透明 PNG（调用预处理器） ----
+        transparent_image: Optional[Image.Image] = None
+        try:
+            pp_config = PreprocessConfig(
+                remove_background=True,
+                subject_crop=True,
+                crop_padding=16,
+                anti_alias=True,
+                output_format=OutputFormat.PNG_RGBA,
+            )
+            pp_result = preprocessor.process(images[0], pp_config)
+            transparent_image = pp_result.image
+            _logger.info("Transparent PNG generated: size=%s", pp_result.output_size)
+        except Exception as pp_err:
+            _logger.warning("Transparent PNG generation skipped: %s", pp_err)
+
+        # ---- 生成 SVG 矢量图（调用矢量转换器） ----
+        svg_string: Optional[str] = None
+        try:
+            vc_config = VectorizationConfig(
+                color_clusters=8,
+                smooth_threshold=1.2,
+                min_region_area=16,
+                path_precision=0.5,
+                preserve_gradient=True,
+                preserve_shadow=True,
+                embed_preview=False,
+            )
+            vc_result = vector_converter.convert(images[0], vc_config)
+            svg_string = vc_result.svg_string
+            _logger.info(
+                "SVG generated: %d layers, %d paths",
+                len(vc_result.color_layers), vc_result.total_paths,
+            )
+        except Exception as vc_err:
+            _logger.warning("SVG generation skipped: %s", vc_err)
+
+        # ---- 保存全部文件到磁盘 + 更新 metadata 路径 ----
+        metadata = _save_result(images, metadata, transparent_image, svg_string)
+
+        # ---- base64 编码响应 ----
         result_images = []
         for img in images:
             buf = BytesIO()
             img.save(buf, format="PNG")
             result_images.append(base64.b64encode(buf.getvalue()).decode())
-
-        # 保存到磁盘（失败不影响请求响应）
-        preview_path = None
-        metadata_path = None
-        try:
-            preview_path, metadata_path = _save_result(images, metadata)
-            _logger.info("Saved: preview=%s, metadata=%s", preview_path, metadata_path)
-        except Exception as disk_err:
-            _logger.warning("Failed to save to disk (generation itself succeeded): %s", disk_err)
 
         total_elapsed = round(time.time() - t_req_start, 2)
         _logger.info(
@@ -479,8 +720,11 @@ def generate_image(req: GenerateRequest):
             "success": True,
             "images": result_images,
             "metadata": metadata.model_dump(),
-            "preview_path": preview_path,
-            "metadata_path": metadata_path,
+            "preview_path": metadata.preview_path,
+            "metadata_path": metadata.metadata_path,
+            "original_path": metadata.original_path,
+            "transparent_path": metadata.transparent_path or None,
+            "svg_path": metadata.svg_path or None,
         }
 
     except HTTPException:
@@ -597,6 +841,7 @@ class VectorizeRequest(BaseModel):
     preserve_shadow: bool = True
     embed_preview: bool = True                             # 是否在 SVG 中嵌入预览
     output_preview_png: bool = False                       # 是否额外返回回渲染 PNG
+    use_edge_driven: bool = True                           # 是否使用边缘驱动管线（推荐）
 
 
 class VectorizeResponse(BaseModel):
@@ -626,6 +871,7 @@ def vectorize_image(req: VectorizeRequest):
             path_precision=req.path_precision,
             preserve_gradient=req.preserve_gradient,
             preserve_shadow=req.preserve_shadow,
+            use_edge_driven=req.use_edge_driven,
             embed_preview=req.embed_preview,
         )
 

@@ -1154,3 +1154,27 @@
 2026-05-24 19:45:42 | INFO     | Generation completed: prompt_id=7516fa80-a29f-4772-90a2-af08fc198c18, seed=42, gen_time=126.11s, total_time=126.42s
 2026-05-24 19:53:38 | INFO     | Request received: text='青山集', style='默认艺术风格', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
 2026-05-24 19:53:40 | ERROR    | Generation failed after 2.09s: HTTPConnectionPool(host='10.195.153.60', port=8188): Max retries exceeded with url: /prompt (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001AF5E283EB0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')) | request text='青山集'
+2026-05-30 15:48:22 | INFO     | Request received: text='青山集', style='国风书法，墨色渐变，金色描边', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-30 15:48:24 | ERROR    | Generation failed after 2.67s: HTTPConnectionPool(host='10.195.153.60', port=8188): Max retries exceeded with url: /prompt (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001D0428FDC60>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')) | request text='青山集'
+2026-05-30 15:48:47 | INFO     | Request received: text='青山集', style='国风书法', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-30 15:48:50 | ERROR    | Generation failed after 2.83s: HTTPConnectionPool(host='10.195.153.60', port=8188): Max retries exceeded with url: /prompt (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001D04294A1D0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')) | request text='青山集'
+2026-05-30 15:49:31 | INFO     | Request received: text='青山集', style='国风书法', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-30 15:49:33 | ERROR    | Generation failed after 2.62s: HTTPConnectionPool(host='10.195.153.60', port=8188): Max retries exceeded with url: /prompt (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001D0428FEF20>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')) | request text='青山集'
+2026-05-30 15:50:05 | INFO     | Request received: text='青山集', style='国风书法，墨色渐变', seed=42, steps=8, cfg=1.10, sampler=euler, scheduler=sgm_uniform, resolution=1024x1024
+2026-05-30 15:50:05 | INFO     | Style enhanced matched: （风格匹配: 促销卡通）
+2026-05-30 15:50:05 | INFO     | Prompt built: text='青山集' style='国风书法，墨色渐变' → 艺术字"青山集"，国风书法，墨色渐变，水墨风格书法艺术字，墨色浓淡相宜，毛笔笔触自然，传统宣纸纹理背景，印章点缀，留白构图，古朴典雅，金色或黑色墨迹，行书或楷书风格，高清矢量质感，商业级艺术字设计，文字清晰可辨，笔画完整无缺失，主体居中，边
+2026-05-30 15:50:05 | INFO     | Negative prompt built (139 chars)
+2026-05-30 15:50:05 | INFO     | Positive prompt: 艺术字"青山集"，国风书法，墨色渐变，水墨风格书法艺术字，墨色浓淡相宜，毛笔笔触自然，传统宣纸纹理背景，印章点缀，留白构图，古朴典雅，金色或黑色墨迹，行书或楷书风格，高清矢量质感，商业级艺术字设计，文字清晰可辨，笔画完整无缺失，主体居中，边缘干净，透明背景
+2026-05-30 15:50:05 | INFO     | Negative prompt: blurry, low quality, distorted text, extra letters, missing letters, messy background，文字模糊，文字变形，笔画残缺，多余文字，拼写错误，乱码，重影，锯齿边缘，低质量，失真，扭曲，混乱背景，水印
+2026-05-30 15:50:08 | ERROR    | Generation failed after 3.03s: HTTPConnectionPool(host='10.195.153.60', port=8188): Max retries exceeded with url: /prompt (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000209EEB78100>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')) | request text='青山集'
+2026-05-30 16:43:41 | INFO     | Vectorize done: 8 layers, 331 paths, 18433 vertices
+2026-05-30 16:46:00 | INFO     | Vectorize done: 8 layers, 250 paths, 7066 vertices
+2026-05-30 16:59:10 | INFO     | Vectorize done: 6 layers, 394 paths, 28798 vertices
+2026-05-30 16:59:53 | INFO     | Vectorize done: 6 layers, 321 paths, 7823 vertices
+2026-05-30 17:10:24 | INFO     | Vectorize done: 6 layers, 4 paths, 787 vertices
+2026-05-30 17:20:42 | INFO     | Vectorize done: 6 layers, 4 paths, 787 vertices
+2026-05-30 17:21:20 | INFO     | Vectorize done: 6 layers, 309 paths, 7712 vertices
+2026-05-30 17:32:38 | INFO     | Vectorize done: 1 layers, 6 paths, 1418 vertices
+2026-05-30 17:33:25 | INFO     | Vectorize done: 1 layers, 4 paths, 736 vertices
+2026-05-30 17:42:45 | INFO     | Vectorize done: 1 layers, 18 paths, 1126 vertices
+2026-05-30 17:43:29 | INFO     | Vectorize done: 1 layers, 46 paths, 1903 vertices
