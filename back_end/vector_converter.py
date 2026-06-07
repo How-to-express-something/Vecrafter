@@ -487,9 +487,17 @@ class VectorConverter:
             warnings.append("No foreground found"); empty = self._build_svg([], [], img.size, cfg)
             return VectorizationResult(svg_string=empty, total_paths=0, warnings=warnings)
 
-        # Minimal cleaning: only OPEN with 3x3 (removes salt-pepper noise only)
+        # Bridge-breaking: erode -> per-component -> dilate back
+        k5 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
         k3 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
-        clean = cv2.morphologyEx(fg_mask.astype(np.uint8), cv2.MORPH_OPEN, k3, iterations=1)
+        eroded = cv2.erode(fg_mask.astype(np.uint8), k5, iterations=1)
+        _, labels = cv2.connectedComponents(eroded)
+        clean = np.zeros_like(fg_mask, dtype=np.uint8)
+        for lid in range(1, labels.max() + 1):
+            comp = (labels == lid).astype(np.uint8)
+            if comp.sum() < cfg.min_region_area: continue
+            dil = cv2.dilate(comp, k5, iterations=1)
+            clean = cv2.bitwise_or(clean, dil)
 
         # ---- 2. Contour detection with holes ----
         contours, hierarchy = cv2.findContours(clean, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -664,15 +672,14 @@ class VectorConverter:
             if found:
                 all_paths.append(vp)
 
-        # ---- 7. SVG output with white background ----
+        # ---- 7. SVG output ----
         dwg = svgwrite.Drawing(size=(w, h), viewBox=f"0 0 {w} {h}")
         dwg.add(dwg.rect(insert=(0,0), size=(w,h), fill="white"))
-        # Render MAIN_TEXT layers first (bottom), DECORATION on top
         for cl in color_layers:
             r, g, b = cl.color; fill = f"rgb({r},{g},{b})"
-            grp = dwg.g(fill=fill, stroke=fill, stroke_width=0.5)
+            grp = dwg.g(fill=fill, stroke="none")
             for ds in cl.svg_elements:
-                grp.add(dwg.path(d=ds))
+                grp.add(dwg.path(d=ds, fill=fill, fill_rule="evenodd"))
             dwg.add(grp)
         svg_string = dwg.tostring()
 
