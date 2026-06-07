@@ -1,0 +1,276 @@
+{
+  "1": {
+    "inputs": {
+      "unet_name": "zImageTurboGGUF_q4KM.gguf"
+    },
+    "class_type": "UnetLoaderGGUF",
+    "_meta": {
+      "title": "Unet Loader (GGUF)"
+    }
+  },
+  "2": {
+    "inputs": {
+      "clip_name": "zImageTurboGGUF_clipQwen34BUDQ4KXL.gguf",
+      "type": "stable_diffusion"
+    },
+    "class_type": "CLIPLoaderGGUF",
+    "_meta": {
+      "title": "CLIPLoader (GGUF)"
+    }
+  },
+  "3": {
+    "inputs": {
+      "vae_name": "ae_zimgturbo.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "4": {
+    "inputs": {
+      "seed": 379375020339024,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "res_multistep",
+      "scheduler": "sgm_uniform",
+      "denoise": 1,
+      "model": [
+        "17",
+        0
+      ],
+      "positive": [
+        "5",
+        0
+      ],
+      "negative": [
+        "6",
+        0
+      ],
+      "latent_image": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "5": {
+    "inputs": {
+      "text": "艺术字“青山集\"",
+      "clip": [
+        "17",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "6": {
+    "inputs": {
+      "text": "blurry, low quality, distorted text, extra letters, missing letters, messy background",
+      "clip": [
+        "17",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "7": {
+    "inputs": {
+      "width": 1024,
+      "height": 600,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "4",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "9": {
+    "inputs": {
+      "filename_prefix": "AB0_15_ZYD1",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "13": {
+    "inputs": {
+      "lora_01": "ZIT_Illustration_v1.0.safetensors",
+      "strength_01": 0,
+      "lora_02": "zyd232_Hanfu_WeiJin_BanXiu_RuQun.safetensors",
+      "strength_02": 1,
+      "lora_03": "EFFECTSp001_zit.safetensors",
+      "strength_03": 0,
+      "lora_04": "Z-Image-Fun-Lora-Distill-8-Steps-2603.safetensors",
+      "strength_04": 0.7,
+      "model": [
+        "1",
+        0
+      ],
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "Lora Loader Stack (rgthree)",
+    "_meta": {
+      "title": "Lora Loader Stack (rgthree)"
+    }
+  },
+  "15": {
+    "inputs": {
+      "model_name": "u2net",
+      "image": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "Image Remove Background (rembg)",
+    "_meta": {
+      "title": "Rembg(Batch)"
+    }
+  },
+  "16": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "17": {
+    "inputs": {
+      "lora_01": "10effects_zit.safetensors",
+      "strength_01": 0,
+      "lora_02": "Z-Image-Aesthetic-Base v1.safetensors",
+      "strength_02": 0.15,
+      "lora_03": "None",
+      "strength_03": 0,
+      "lora_04": "None",
+      "strength_04": 0,
+      "model": [
+        "13",
+        0
+      ],
+      "clip": [
+        "13",
+        1
+      ]
+    },
+    "class_type": "Lora Loader Stack (rgthree)",
+    "_meta": {
+      "title": "Lora Loader Stack (rgthree)"
+    }
+  },
+  "21": {
+    "inputs": {
+      "name": "Z-Image-Turbo-Fun-Controlnet-Union-2.1-2602-8steps.safetensors"
+    },
+    "class_type": "ModelPatchLoader",
+    "_meta": {
+      "title": "ModelPatchLoader"
+    }
+  },
+  "22": {
+    "inputs": {
+      "strength": [
+        "25",
+        2
+      ],
+      "model": [
+        "17",
+        0
+      ],
+      "model_patch": [
+        "21",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ],
+      "image": [
+        "26",
+        0
+      ]
+    },
+    "class_type": "QwenImageDiffsynthControlnet",
+    "_meta": {
+      "title": "QwenImageDiffsynthControlnet"
+    }
+  },
+  "24": {
+    "inputs": {
+      "shift": 3,
+      "model": [
+        "22",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "ModelSamplingAuraFlow"
+    }
+  },
+  "25": {
+    "inputs": {
+      "text": "向阳生",
+      "base_strength": 1
+    },
+    "class_type": "CharAutoStyle",
+    "_meta": {
+      "title": "Char Auto Style + Strength"
+    }
+  },
+  "26": {
+    "inputs": {
+      "text": "向阳生",
+      "font_name": "NotoSansSC-Thin.ttf",
+      "auto_size": true,
+      "canvas_width": 1024,
+      "canvas_height": 1024,
+      "font_size": 400,
+      "blur_radius": 2,
+      "color_depth": 80
+    },
+    "class_type": "TextToCNTemplate",
+    "_meta": {
+      "title": "Text → CN Template"
+    }
+  }
+}

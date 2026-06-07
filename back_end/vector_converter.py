@@ -475,166 +475,222 @@ class VectorConverter:
     def _convert_edge_driven(
         self, img: Image.Image, cfg: VectorizationConfig,
     ) -> VectorizationResult:
-        """OpenCV 边缘驱动矢量化管线"""
+        """Enhanced contour vectorization: multi-color + detail preservation"""
         warnings: List[str] = []
         img_rgba = np.array(img, dtype=np.uint8)
         h, w = img_rgba.shape[:2]
+        rgb = img_rgba[:, :, :3]
 
-        # ---- 前景掩码 ----
+        # ---- 1. Foreground mask (NO CLOSE - preserves dots and thin lines) ----
         fg_mask = self._segment_foreground_cv(img_rgba)
-
         if not fg_mask.any():
-            warnings.append("No foreground found")
-            empty = self._build_svg([], [], img.size, cfg)
-            return VectorizationResult(
-                svg_string=empty, total_paths=0,
-                preview_image=self._render_preview(empty, img.size) if cfg.embed_preview else None,
-                warnings=warnings,
-            )
+            warnings.append("No foreground found"); empty = self._build_svg([], [], img.size, cfg)
+            return VectorizationResult(svg_string=empty, total_paths=0, warnings=warnings)
 
-        # ---- 形态学清洗：闭运算填孔 + 开运算去噪 ----
-        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-        cleaned = cv2.morphologyEx(fg_mask.astype(np.uint8), cv2.MORPH_CLOSE, kernel, iterations=1)
-        cleaned = cv2.morphologyEx(cleaned, cv2.MORPH_OPEN, kernel, iterations=1)
-        # 高斯平滑边缘
-        blurred = cv2.GaussianBlur(cleaned.astype(np.float32), (5, 5), cfg.edge_smooth_radius)
-        clean_mask = (blurred > 0.45).astype(np.uint8)
+        # Minimal cleaning: only OPEN with 3x3 (removes salt-pepper noise only)
+        k3 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+        clean = cv2.morphologyEx(fg_mask.astype(np.uint8), cv2.MORPH_OPEN, k3, iterations=1)
 
-        # ---- OpenCV 轮廓检测 ----
-        # RETR_EXTERNAL = 仅最外层轮廓（无视孔洞内部，正是我们要的）
-        contours, _ = cv2.findContours(
-            clean_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_L1,
-        )
-        _logger.debug("OpenCV found %d external contours", len(contours))
-
+        # ---- 2. Contour detection with holes ----
+        contours, hierarchy = cv2.findContours(clean, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        if hierarchy is None:
+            contours, _ = cv2.findContours(clean, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         if not contours:
-            warnings.append("No contours found")
-            empty = self._build_svg([], [], img.size, cfg)
-            return VectorizationResult(svg_string=empty, total_paths=0, warnings=warnings,
-                preview_image=self._render_preview(empty, img.size) if cfg.embed_preview else None)
+            warnings.append("No contours"); empty = self._build_svg([], [], img.size, cfg)
+            return VectorizationResult(svg_string=empty, total_paths=0, warnings=warnings)
 
-        # ---- 按面积过滤 + Douglas-Peucker 简化 ----
-        rgb_array = img_rgba[:, :, :3]
-        paths: List[VectorPath] = []
-        color_groups: Dict[Tuple[int, int, int], List[str]] = {}
+        eps = cfg.path_precision
+        h_data = hierarchy[0] if hierarchy is not None else None
+        roots = [i for i in range(len(contours)) if h_data is None or h_data[i][3] == -1]
 
-        for cnt in contours:
-            area = cv2.contourArea(cnt)
-            if area < cfg.min_region_area:
-                continue
+        # ---- 3. Process each root contour with multi-color extraction ----
+        paths = []; color_groups = {}; svg_datas = []
 
-            # Douglas-Peucker 简化（OpenCV 内置，C++ 实现）
-            epsilon = cfg.path_precision
-            simplified = cv2.approxPolyDP(cnt, epsilon, closed=True)
-            n_pts = simplified.shape[0]
-            if n_pts < 3:
-                continue
+        for root_idx in roots:
+            root_cnt = contours[root_idx]
+            area = cv2.contourArea(root_cnt)
+            if area < cfg.min_region_area: continue
 
-            # 颜色回采：从轮廓内部像素采样主色
-            # 用轮廓自身做掩码
+            root_s = cv2.approxPolyDP(root_cnt, eps, closed=True)
+            root_p = root_s[:, 0, :]
+            if root_p.shape[0] < 3: continue
+
+            # Build mask for this contour
             mask_layer = np.zeros((h, w), dtype=np.uint8)
-            cv2.drawContours(mask_layer, [simplified], -1, 255, thickness=cv2.FILLED)
+            cv2.drawContours(mask_layer, [root_cnt], -1, 255, thickness=cv2.FILLED)
             region_mask = mask_layer > 0
-            color = _sample_dominant_color(rgb_array, region_mask)
+            text_mask = region_mask & (fg_mask > 0)
+            if not text_mask.any(): text_mask = region_mask
+            region_px = rgb[text_mask]
 
-            # 构建 SVG d 字符串（含贝塞尔曲线拟合）
-            pts = simplified[:, 0, :].astype(np.float64)  # (N, 2)
-            d = _polyline_to_bezier(pts, angle_threshold=0.6)
+            # ---- Multi-color extraction: K-Means on this contour's interior ----
+            if len(region_px) >= 100:
+                k_local = min(3, len(region_px) // 10 + 1)
+                k_local = max(2, k_local)
+                crit_l = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 15, 1.0)
+                _, lbl_l, ctr_l = cv2.kmeans(region_px.astype(np.float32), k_local, None, crit_l, 10, cv2.KMEANS_PP_CENTERS)
+                sz_l = np.bincount(lbl_l.flatten(), minlength=k_local)
+                # Split into sub-regions for each color cluster
+                sub_colors = []
+                for ci in np.argsort(-sz_l):
+                    clr = tuple(np.clip(np.round(ctr_l[ci]), 0, 255).astype(np.uint8).tolist())
+                    pct = sz_l[ci] / len(region_px)
+                    sub_colors.append((clr, ci, pct))
 
-            vp = VectorPath(
-                d=d, closed=True, vertex_count=n_pts,
-                region_type=RegionType.MAIN_TEXT, color_layer_index=0,
-            )
-            paths.append(vp)
+                # Build d string with holes first (will use main contour for largest cluster)
+                main_parts = [f"M {root_p[0][0]:.1f} {root_p[0][1]:.1f}"]
+                for j in range(1, root_p.shape[0]):
+                    main_parts.append(f"L {root_p[j][0]:.1f} {root_p[j][1]:.1f}")
+                main_parts.append("Z")
 
-            key = color
-            if key not in color_groups:
-                color_groups[key] = []
-            color_groups[key].append(d)
+                # Holes
+                if h_data is not None:
+                    child = h_data[root_idx][2]
+                    while child >= 0:
+                        cs = cv2.approxPolyDP(contours[child], eps, closed=True)
+                        cp = cs[:, 0, :]
+                        if cp.shape[0] >= 3:
+                            for j in range(cp.shape[0]): main_parts.append(f"L {cp[j][0]:.1f} {cp[j][1]:.1f}")
+                            main_parts.append("Z")
+                        child = h_data[child][0]
+
+                # Main contour gets the dominant color
+                main_color = sub_colors[0][0]
+                main_d = " ".join(main_parts)
+                vp = VectorPath(d=main_d, closed=True, vertex_count=root_p.shape[0],
+                                region_type=RegionType.MAIN_TEXT, color_layer_index=0)
+                paths.append(vp)
+                if main_color not in color_groups: color_groups[main_color] = []
+                color_groups[main_color].append(main_d)
+
+                # Additional color clusters: create sub-contours for clusters > 15%
+                for si in range(1, len(sub_colors)):
+                    if sub_colors[si][2] < 0.15: continue  # skip tiny clusters
+                    sub_clr, sub_ci, _ = sub_colors[si]
+                    sub_mask = np.zeros((h, w), dtype=np.uint8)
+                    # Create mask for this cluster's pixels
+                    flat_lbl = lbl_l.flatten()
+                    pixel_mask = np.zeros(text_mask.sum(), dtype=bool)
+                    pixel_mask[flat_lbl == sub_ci] = True
+                    temp_mask = np.zeros((h, w), dtype=np.uint8)
+                    temp_mask[text_mask] = pixel_mask.astype(np.uint8)
+
+                    # Morphological close to connect fragmented pixels
+                    temp_mask = cv2.morphologyEx(temp_mask, cv2.MORPH_CLOSE, k3, iterations=2)
+
+                    sub_cnts, _ = cv2.findContours(temp_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                    for sc in sub_cnts:
+                        if cv2.contourArea(sc) < cfg.min_region_area * 2: continue
+                        sc_s = cv2.approxPolyDP(sc, eps, closed=True)
+                        sc_p = sc_s[:, 0, :]
+                        if sc_p.shape[0] < 3: continue
+                        sc_parts = [f"M {sc_p[0][0]:.1f} {sc_p[0][1]:.1f}"]
+                        for j in range(1, sc_p.shape[0]): sc_parts.append(f"L {sc_p[j][0]:.1f} {sc_p[j][1]:.1f}")
+                        sc_parts.append("Z")
+                        sc_d = " ".join(sc_parts)
+                        mapped = sub_clr
+                        sc_vp = VectorPath(d=sc_d, closed=True, vertex_count=sc_p.shape[0],
+                                           region_type=RegionType.DECORATION, color_layer_index=0)
+                        paths.append(sc_vp)
+                        if mapped not in color_groups: color_groups[mapped] = []
+                        color_groups[mapped].append(sc_d)
+            else:
+                # Too few pixels: single color
+                clr = tuple(np.median(region_px, axis=0).astype(np.uint8).tolist())
+                mapped = clr
+
+                parts = [f"M {root_p[0][0]:.1f} {root_p[0][1]:.1f}"]
+                for j in range(1, root_p.shape[0]): parts.append(f"L {root_p[j][0]:.1f} {root_p[j][1]:.1f}")
+                parts.append("Z")
+                if h_data is not None:
+                    child = h_data[root_idx][2]
+                    while child >= 0:
+                        cs = cv2.approxPolyDP(contours[child], eps, closed=True)
+                        cp = cs[:, 0, :]
+                        if cp.shape[0] >= 3:
+                            for j in range(cp.shape[0]): parts.append(f"L {cp[j][0]:.1f} {cp[j][1]:.1f}")
+                            parts.append("Z")
+                        child = h_data[child][0]
+                d = " ".join(parts)
+                vp = VectorPath(d=d, closed=True, vertex_count=root_p.shape[0],
+                                region_type=RegionType.MAIN_TEXT, color_layer_index=0)
+                paths.append(vp)
+                if mapped not in color_groups: color_groups[mapped] = []
+                color_groups[mapped].append(d)
 
         if not paths:
-            warnings.append("All contours filtered out")
-            empty = self._build_svg([], [], img.size, cfg)
-            return VectorizationResult(svg_string=empty, total_paths=0, warnings=warnings,
-                preview_image=self._render_preview(empty, img.size) if cfg.embed_preview else None)
+            warnings.append("No valid paths"); empty = self._build_svg([], [], img.size, cfg)
+            return VectorizationResult(svg_string=empty, total_paths=0, warnings=warnings)
 
-        # ---- 合并相似颜色 ----
-        if cfg.merge_similar_layers and len(color_groups) > 1:
-            merged: Dict[Tuple[int, int, int], List[str]] = {}
-            keys = list(color_groups.keys())
-            assigned = [False] * len(keys)
+        # ---- 5. Merge similar colors ----
+        if len(color_groups) > 1:
+            mg = {}; keys = list(color_groups.keys()); ass = [False] * len(keys)
             for i, c1 in enumerate(keys):
-                if assigned[i]:
-                    continue
-                group = list(color_groups[c1])
-                assigned[i] = True
-                for j in range(i + 1, len(keys)):
-                    if assigned[j]:
-                        continue
-                    c2 = keys[j]
-                    dist = math.sqrt((c1[0]-c2[0])**2 + (c1[1]-c2[1])**2 + (c1[2]-c2[2])**2)
-                    if dist < cfg.merge_color_distance:
-                        group.extend(color_groups[c2])
-                        assigned[j] = True
-                if merged:
-                    best = min(merged.keys(),
-                               key=lambda k: (k[0]-c1[0])**2 + (k[1]-c1[1])**2 + (k[2]-c1[2])**2)
-                    merged[best].extend(group)
-                else:
-                    merged[c1] = group
-            color_groups = merged
+                if ass[i]: continue
+                g = list(color_groups[c1]); ass[i] = True
+                for j in range(i+1, len(keys)):
+                    if ass[j]: continue
+                    d = math.sqrt((c1[0]-keys[j][0])**2 + (c1[1]-keys[j][1])**2 + (c1[2]-keys[j][2])**2)
+                    if d < 40.0: g.extend(color_groups[keys[j]]); ass[j] = True
+                mg[c1] = g
+            color_groups = mg
 
-        # ---- 构建 ColorLayer + SVG ----
-        color_layers: List[ColorLayer] = []
-        all_paths: List[VectorPath] = []
-        for ci, (color, d_list) in enumerate(color_groups.items()):
-            cl = ColorLayer(color=color, color_index=ci, region_count=len(d_list), z_order=ci)
-            cl.svg_elements = d_list
-            color_layers.append(cl)
-            for d_str in d_list:
-                for vp in paths:
-                    if vp.d == d_str:
-                        vp.color_layer_index = ci
-                        all_paths.append(vp)
-                        break
+        # ---- 6. Build SVG with proper ordering (text first, then decorations) ----
+        color_layers = []; all_paths = []
+        # Sort paths: MAIN_TEXT first (bottom), then DECORATION (top)
+        main_paths = [p for p in paths if p.region_type == RegionType.MAIN_TEXT]
+        deco_paths = [p for p in paths if p.region_type == RegionType.DECORATION]
+        ordered_paths = main_paths + deco_paths
 
-        # ---- 用 svgwrite 生成 SVG ----
+        for vp in ordered_paths:
+            # Find color for this path
+            ds = vp.d
+            found = False
+            for color, d_list in color_groups.items():
+                if ds in d_list:
+                    vp.color_layer_index = list(color_groups.keys()).index(color)
+                    # Check if layer exists
+                    existing = [cl for cl in color_layers if cl.color == color]
+                    if existing:
+                        existing[0].svg_elements.append(ds)
+                        existing[0].region_count += 1
+                    else:
+                        cl = ColorLayer(color=color, color_index=len(color_layers),
+                                        region_count=1, z_order=len(color_layers))
+                        cl.svg_elements = [ds]
+                        color_layers.append(cl)
+                    found = True
+                    break
+            if found:
+                all_paths.append(vp)
+
+        # ---- 7. SVG output with white background ----
         dwg = svgwrite.Drawing(size=(w, h), viewBox=f"0 0 {w} {h}")
+        dwg.add(dwg.rect(insert=(0,0), size=(w,h), fill="white"))
+        # Render MAIN_TEXT layers first (bottom), DECORATION on top
         for cl in color_layers:
-            r, g, b = cl.color
-            fill = f"rgb({r},{g},{b})"
-            grp = dwg.g(fill=fill, stroke="none")
-            for d_str in cl.svg_elements:
-                grp.add(dwg.path(d=d_str))
+            r, g, b = cl.color; fill = f"rgb({r},{g},{b})"
+            grp = dwg.g(fill=fill, stroke=fill, stroke_width=0.5)
+            for ds in cl.svg_elements:
+                grp.add(dwg.path(d=ds))
             dwg.add(grp)
-
         svg_string = dwg.tostring()
 
-        # ---- 预览 ----
         preview = None
         if cfg.embed_preview:
-            try:
-                preview = self._render_preview(svg_string, img.size)
-            except Exception as exc:
-                _logger.warning("Preview failed: %s", exc)
-                warnings.append(f"Preview failed: {exc}")
+            try: preview = self._render_preview(svg_string, img.size)
+            except: pass
 
-        type_counts = {}
-        for p in all_paths:
-            t = p.region_type.value
-            type_counts[t] = type_counts.get(t, 0) + 1
-
-        _logger.info(
-            "Edge-driven done (OpenCV): %d layers, %d paths, %d vertices",
-            len(color_layers), len(all_paths), sum(p.vertex_count for p in all_paths),
-        )
+        tc = {}
+        for p in all_paths: t = p.region_type.value; tc[t] = tc.get(t, 0) + 1
+        _logger.info("Enhanced contour: %d layers, %d paths (%d main + %d deco)",
+                     len(color_layers), len(all_paths), tc.get("main_text", 0), tc.get("decoration", 0))
         return VectorizationResult(
             svg_string=svg_string, color_layers=color_layers,
             total_paths=len(all_paths),
             total_vertices=sum(p.vertex_count for p in all_paths),
-            region_type_counts=type_counts, preview_image=preview,
-            metadata={"source_size": img.size, "mode": "cv_edge_driven",
-                      "color_cluster_count": len(color_layers)},
+            region_type_counts=tc, preview_image=preview,
+            metadata={"source_size": img.size, "mode": "enhanced_contour", "palette_size": 0},
             warnings=warnings,
         )
 

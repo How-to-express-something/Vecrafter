@@ -135,7 +135,7 @@ def _post_process_image(image: Image.Image) -> Image.Image:
 
 # ======================= ComfyUI 封装 =======================
 class ComfyUIWrapper:
-    def __init__(self, server_url: str = "http://10.195.153.60:8188"):
+    def __init__(self, server_url: str = "http://10.195.155.46:8188"):
         self.server_url = server_url.rstrip("/")
         self.client_id = str(int(time.time() * 1000))
         self.ws_url = server_url.replace("http://", "ws://", 1).rstrip("/") + f"/ws?clientId={self.client_id}"
@@ -292,11 +292,19 @@ class ComfyUIWrapper:
         if seed == -1:
             seed = random.randint(0, 2**32 - 1)
 
-        # CFG_test.json 节点 ID 映射:
-        #   "5" → positive prompt (CLIPTextEncode)
+        # updated26_6_7.json 节点 ID 映射:
+        #   "5" → positive prompt (CLIPTextEncode) — text 由 "25" 传入
         #   "6" → negative prompt (CLIPTextEncode)
-        #   "4" → KSampler
+        #   "4" → KSampler (sampler=res_multistep, scheduler=simple)
         #   "7" → EmptyLatentImage
+        #   "25" → CharAutoStyle（接收原始文本 + base_strength）
+        #   "26" → TextToCNTemplate（接收文本生成字形参考图）
+
+        if "25" in workflow:
+            workflow["25"]["inputs"]["text"] = positive_prompt
+
+        if "26" in workflow:
+            workflow["26"]["inputs"]["text"] = positive_prompt
 
         if "5" in workflow:
             workflow["5"]["inputs"]["text"] = positive_prompt
@@ -346,7 +354,7 @@ app.add_middleware(
 )
 
 _config_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "config")
-DEFAULT_WORKFLOW = os.path.join(_config_dir, "CFG_test.json")
+DEFAULT_WORKFLOW = os.path.join(_config_dir, "stableOutput_26_6_7.json")
 
 wrapper = ComfyUIWrapper()
 preprocessor = ImagePreprocessor()
@@ -362,9 +370,9 @@ class GenerateRequest(BaseModel):
     width: int = 1024
     height: int = 1024
     steps: int = 8
-    cfg: float = 1.1
-    sampler_name: str = "euler"
-    scheduler: str = "sgm_uniform"
+    cfg: float = 1.0
+    sampler_name: str = "res_multistep"
+    scheduler: str = "simple"
 
 
 class GenerationMetadata(BaseModel):

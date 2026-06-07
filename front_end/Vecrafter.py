@@ -152,9 +152,9 @@ class BackendAPI:
                 "width": int(w),
                 "height": int(h),
                 "steps": 8,
-                "cfg": 1.1,
-                "sampler_name": "euler",
-                "scheduler": "sgm_uniform",
+                "cfg": 1.0,
+                "sampler_name": "res_multistep",
+                "scheduler": "simple",
             }
             resp = requests.post(
                 f"{BACKEND_URL}/generate",
