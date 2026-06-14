@@ -243,6 +243,172 @@ def cmd_check_env(args):
     print(f"\n  环境状态: {'[OK] 就绪' if ok else '[WARN] 部分缺失'}")
 
 
+def cmd_repl():
+    """交互式命令行（类似 Claude Code 风格）"""
+    import shutil
+    width = shutil.get_terminal_size().columns
+
+    print("=" * min(width, 60))
+    print("  Vecrafter - 矢量艺术字工坊 (交互模式)")
+    print("  输入 help 查看命令，exit 退出")
+    print("=" * min(width, 60))
+    print()
+    print("! 首次使用先运行 check-env 检测环境")
+    print()
+
+    while True:
+        try:
+            cmd = input("vecrafter> ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\n再见!")
+            break
+
+        if not cmd:
+            continue
+
+        if cmd in ("exit", "quit", "q"):
+            print("再见!")
+            break
+
+        if cmd in ("help", "?"):
+            print("""可用命令:
+  generate <文字> [--style 风格] [--seed 种子]  生成艺术字
+  vectorize <图片路径>                           矢量化图片
+  batch <文件路径>                                批量生成
+  check-env                                      环境检测
+  status                                         查看后端状态
+  exit/quit                                       退出""")
+            continue
+
+        if cmd == "check-env":
+            cmd_check_env(argparse.Namespace())
+            continue
+
+        if cmd == "status":
+            _cmd_status()
+            continue
+
+        if cmd.startswith("generate "):
+            _cmd_interactive_generate(cmd[9:].strip())
+            continue
+
+        if cmd.startswith("vectorize "):
+            _cmd_interactive_vectorize(cmd[10:].strip())
+            continue
+
+        if cmd.startswith("batch "):
+            _cmd_interactive_batch(cmd[6:].strip())
+            continue
+
+        print(f"未知命令: {cmd}  输入 help 查看可用命令")
+
+
+def _cmd_status():
+    try:
+        import requests
+        t0 = time.time()
+        r = requests.get(f"{BACKEND_URL}/health", timeout=5)
+        print(f"  后端状态: {'运行中' if r.status_code==200 else '异常'} ({time.time()-t0:.1f}s)")
+    except:
+        print("  后端状态: 未运行 (启动: python back_end/main.py)")
+
+
+def _cmd_interactive_generate(text_input: str):
+    import requests, re
+    style = ""; seed = 42
+    parts = re.split(r' (--\w+) ', text_input)
+    text = parts[0].strip() if parts else text_input
+    for i in range(1, len(parts), 2):
+        flag = parts[i].strip()
+        val = parts[i+1].strip() if i+1 < len(parts) else ""
+        if flag == "--style": style = val
+        elif flag == "--seed":
+            try: seed = int(val)
+            except: pass
+    print(f"  text={text} style={style} seed={seed}")
+    payload = {"text": text, "style_prompt": style, "seed": seed, "width": 1024, "height": 600}
+    t0 = time.time()
+    try:
+        r = requests.post(f"{BACKEND_URL}/generate", json=payload, timeout=900)
+        if r.status_code == 200:
+            data = r.json()
+            out_dir = Path("output") / f"int_{int(time.time())}"
+            out_dir.mkdir(parents=True, exist_ok=True)
+            for j, b64 in enumerate(data.get("images", [])):
+                (out_dir / f"result_{j}.png").write_bytes(base64.b64decode(b64))
+            if data.get("metadata"):
+                (out_dir / "metadata.json").write_text(json.dumps(data["metadata"], ensure_ascii=False, indent=2), encoding="utf-8")
+            print(f"  [OK] {time.time()-t0:.1f}s -> {out_dir}/")
+        else:
+            print(f"  [X] {r.json().get('detail', r.text)[:100]}")
+    except requests.exceptions.ConnectionError:
+        print("  [X] 后端未运行，请先启动 python back_end/main.py")
+    except Exception as e:
+        print(f"  [X] {str(e)[:60]}")
+
+
+def _cmd_interactive_vectorize(path: str):
+    import requests
+    p = Path(path)
+    if not p.exists(): print(f"  [X] 文件不存在: {path}"); return
+    try:
+        from PIL import Image
+        img = Image.open(p); buf = io.BytesIO(); img.save(buf, format="PNG")
+        b64 = base64.b64encode(buf.getvalue()).decode()
+        t0 = time.time()
+        r = requests.post(f"{BACKEND_URL}/vectorize", json={"image_b64": b64, "use_edge_driven": True, "embed_preview": False}, timeout=600)
+        if r.status_code == 200:
+            data = r.json()
+            out_path = p.with_suffix(".svg")
+            out_path.write_text(data["svg_string"], encoding="utf-8")
+            print(f"  [OK] {time.time()-t0:.1f}s -> {out_path}  路径数: {data.get('total_paths', '?')}")
+        else:
+            print(f"  [X] {r.json().get('detail', r.text)[:100]}")
+    except requests.exceptions.ConnectionError:
+        print("  [X] 后端未运行")
+    except Exception as e:
+        print(f"  [X] {str(e)[:60]}")
+
+
+def _cmd_interactive_batch(path: str):
+    import requests, csv
+    ext = Path(path).suffix.lower()
+    if not Path(path).exists(): print(f"  [X] 文件不存在: {path}"); return
+    items = []
+    try:
+        if ext == ".csv":
+            with open(path, "r", encoding="utf-8") as f:
+                for row in csv.DictReader(f):
+                    if row.get("text"): items.append({"text": row["text"].strip(), "style": row.get("style",""), "seed": int(row["seed"]) if row.get("seed") else 42})
+        elif ext == ".json":
+            for entry in json.loads(Path(path).read_text(encoding="utf-8")):
+                if entry.get("text"): items.append({"text": entry["text"], "style": entry.get("style",""), "seed": entry.get("seed",42)})
+        elif ext == ".txt":
+            for line in Path(path).read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if line and not line.startswith("#"): items.append({"text": line, "style": "", "seed": 42})
+    except Exception as e: print(f"  [X] 解析失败: {e}"); return
+    if not items: print("  [X] 无有效提示词"); return
+    print(f"  共 {len(items)} 条，开始生成...")
+    out_dir = Path("output") / f"batch_{int(time.time())}"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    success = 0
+    for i, item in enumerate(items):
+        print(f"    [{i+1}/{len(items)}] {item['text'][:20]}...", end=" ", flush=True)
+        try:
+            r = requests.post(f"{BACKEND_URL}/generate", json={"text": item["text"], "style_prompt": item["style"], "seed": item["seed"], "width": 1024, "height": 600}, timeout=900)
+            if r.status_code == 200:
+                data = r.json()
+                item_dir = out_dir / f"{i:04d}_{item['text'][:16]}"
+                item_dir.mkdir(exist_ok=True)
+                for j, b64 in enumerate(data.get("images", [])): (item_dir / f"result_{j}.png").write_bytes(base64.b64decode(b64))
+                if data.get("metadata"): (item_dir / "metadata.json").write_text(json.dumps(data["metadata"], ensure_ascii=False, indent=2), encoding="utf-8")
+                success += 1; print("OK")
+            else: print("FAIL")
+        except: print("ERR")
+    print(f"  完成: {success}/{len(items)} 成功 -> {out_dir}/")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Vecrafter - 矢量艺术字生成与转换工具",
@@ -278,6 +444,9 @@ def main():
     # check-env
     sub.add_parser("check-env", help="检测运行环境")
 
+    # repl (交互模式)
+    sub.add_parser("repl", help="交互式命令行")
+
     args = parser.parse_args()
     if args.command == "generate":
         cmd_generate(args)
@@ -287,6 +456,10 @@ def main():
         cmd_batch(args)
     elif args.command == "check-env":
         cmd_check_env(args)
+    elif args.command == "repl":
+        cmd_repl()
+    elif args.command is None:
+        cmd_repl()
     else:
         parser.print_help()
 
