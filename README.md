@@ -16,6 +16,20 @@ pip install -r requirements.txt
 python cli.py check-env
 ```
 
+### 配置 ComfyUI 路径
+
+设置 `COMFYUI_HOME` 环境变量后，启动脚本将自动拉起 ComfyUI，无需手动操作：
+
+```powershell
+# Windows（管理员终端，永久生效）
+setx COMFYUI_HOME "C:\ComfyUI_windows_portable"
+
+# Linux / macOS
+echo 'export COMFYUI_HOME="/path/to/ComfyUI"' >> ~/.bashrc
+```
+
+未设置时需先手动启动 ComfyUI，再启动 Vecrafter。
+
 ### 启动（任选一种）
 
 **方式一：交互式 CLI（推荐）**
@@ -153,17 +167,61 @@ python cli.py check-env
 
 自动检查：Python 版本、9 个核心依赖包、ComfyUI 连通性（本地/远程）、GPU 可用性、配置文件完整性。未安装的依赖会明确提示。
 
+## 模型下载与安装
+
+以下模型清单基于当前工作流配置 `config/stableOutput_26_6_7.json`，仅包含实际启用节点（strength > 0）。
+
+### 目录结构
+
+将下载的模型文件放入 ComfyUI 安装目录下的 `models/` 对应子目录：
+
+```
+ComfyUI/
+└── models/
+    ├── unet/
+    │   └── zImageTurboGGUF_q4KM.gguf              # UNet（GGUF 量化）
+    ├── clip/
+    │   └── zImageTurboGGUF_clipQwen34BUDQ4KXL.gguf # CLIP 文本编码器
+    ├── vae/
+    │   └── ae_zimgturbo.safetensors                 # VAE 解码器
+    ├── controlnet/
+    │   └── Z-Image-Turbo-Fun-Controlnet-Union-2.1-2602-8steps.safetensors
+    └── loras/
+        ├── zyd232_Hanfu_WeiJin_BanXiu_RuQun.safetensors   # 汉服风格（strength=1.0）
+        ├── Z-Image-Fun-Lora-Distill-8-Steps-2603.safetensors # 步数蒸馏（strength=0.7）
+        └── Z-Image-Aesthetic-Base v1.safetensors          # 美学增强（strength=0.15）
+```
+
+### 模型清单（共 7 个，全部必须）
+
+| # | 模型文件 | 类型 | 下载地址 | 放置目录 |
+|---|---------|------|---------|---------|
+| 1 | `zImageTurboGGUF_q4KM.gguf` | UNet | [HuggingFace](https://huggingface.co/vantagewithai/Z-Image-Turbo-GGUF)，下载后重命名为 `zImageTurboGGUF_q4KM.gguf` | `models/unet/` |
+| 2 | `zImageTurboGGUF_clipQwen34BUDQ4KXL.gguf` | CLIP | [HuggingFace](https://huggingface.co/felipedpm/z-image-turbo-GGUF-confyui)，下载后重命名为 `zImageTurboGGUF_clipQwen34BUDQ4KXL.gguf` | `models/clip/` |
+| 3 | `ae_zimgturbo.safetensors` | VAE | [HuggingFace](https://huggingface.co/Comfy-Org/z_image_turbo)（路径 `split_files/vae/ae.safetensors`），下载后重命名为 `ae_zimgturbo.safetensors` | `models/vae/` |
+| 4 | `Z-Image-Turbo-Fun-Controlnet-Union-2.1-2602-8steps.safetensors` | ControlNet | [HuggingFace](https://huggingface.co/alibaba-pai/Z-Image-Turbo-Fun-Controlnet-Union-2.1) | `models/controlnet/` |
+| 5 | `Z-Image-Fun-Lora-Distill-8-Steps-2603.safetensors` | LoRA | [HuggingFace](https://huggingface.co/alibaba-pai/Z-Image-Fun-Lora-Distill) | `models/loras/` |
+| 6 | `zyd232_Hanfu_WeiJin_BanXiu_RuQun.safetensors` | LoRA | [CivitAI](https://civitai.com/models/2333602) | `models/loras/` |
+| 7 | `Z-Image-Aesthetic-Base v1.safetensors` | LoRA | [CivitAI](https://civitai.com/models/2214707) | `models/loras/` |
+
+> HuggingFace 上部分文件的原始名称与工作流引用名不一致（如 `z_image_turbo-Q4_K_M.gguf`），下载后须按上表第一列的文件名重命名。CivitAI 需注册登录。
+
+### 其他依赖
+
+| 依赖 | 用途 | 下载方式 |
+|------|------|---------|
+| `u2net`（rembg 背景去除） | 首次调用 `rembg` 时自动下载，无需手动处理 | 自动 |
+| [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager) | ComfyUI 插件管理 | `git clone` 至 `ComfyUI/custom_nodes/` |
+| [rgthree-comfy](https://github.com/rgthree/rgthree-comfy) | LoRA Loader Stack 节点（Node 13, 17） | 通过 ComfyUI Manager 安装，或 `git clone` 至 `custom_nodes/` |
+| QwenImageDiffsynthControlnet | ControlNet 推理节点（Node 22），ComfyUI 新版已内置 | 更新 ComfyUI 至最新版即可 |
+
+> 工作流中 `ZIT_Illustration_v1.0`（Node 13）、`EFFECTSp001_zit`（Node 13）、`10effects_zit`（Node 17）的 strength 均为 0，已禁用，**无需下载**。
+
 ### ComfyUI 工作流
 
 默认配置文件：`config/stableOutput_26_6_7.json`（推荐）
 
-工作流节点：UnetLoader → CLIPLoader → LoRA Stack → ModelPatchLoader → CharAutoStyle → ControlNet → KSampler → VAE Decode → Rembg → SaveImage
-
-**模型/节点依赖：**
-- [z-image Turbo GGUF](https://huggingface.co/)（Unet + CLIP + VAE）
-- [Z-Image-Turbo-Fun-Controlnet-Union](https://huggingface.co/)（ControlNet）
-- [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)（插件管理）
-- rgthree's ComfyUI Nodes（LoRA Loader Stack）
+工作流节点：UnetLoader → CLIPLoader → LoRA Stack ×2 → ModelPatchLoader → CharAutoStyle → ControlNet → KSampler → VAE Decode → Rembg → SaveImage
 
 ---
 

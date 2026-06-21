@@ -15,18 +15,33 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+:: 自动启动 ComfyUI（如果设置了 COMFYUI_HOME）
+if defined COMFYUI_HOME (
+    echo [启动] 自动拉起 ComfyUI（路径: %COMFYUI_HOME%）...
+    start "ComfyUI" /B python "%COMFYUI_HOME%\main.py" >nul 2>&1
+    echo [等待] 等待 ComfyUI 就绪（最长 120s）...
+    for /l %%i in (1,1,120) do (
+        python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8188', timeout=1)" >nul 2>&1
+        if not errorlevel 1 goto :comfyui_ready
+        timeout /t 1 /nobreak >nul
+    )
+    echo [警告] ComfyUI 启动超时（120s），请手动检查
+    goto :comfyui_done
+    :comfyui_ready
+    echo [启动] ComfyUI ✅ 已就绪
+    :comfyui_done
+    echo.
+)
+
 :: 检测 ComfyUI（仅提示，不阻塞）
 echo [检测] 检查 ComfyUI 连接...
-python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8188', timeout=2)" >nul 2>&1
+if not defined COMFYUI_URL set "COMFYUI_URL=http://127.0.0.1:8188"
+python -c "import urllib.request; urllib.request.urlopen('%COMFYUI_URL%', timeout=2)" >nul 2>&1
 if %errorlevel% equ 0 (
-    echo [检测] ComfyUI ✅ 本地 127.0.0.1:8188
+    echo [检测] ComfyUI ✅ %COMFYUI_URL%
 ) else (
-    python -c "import urllib.request; urllib.request.urlopen('http://10.195.155.46:8188', timeout=2)" >nul 2>&1
-    if %errorlevel% equ 0 (
-        echo [检测] ComfyUI ✅ 远程 10.195.155.46:8188
-    ) else (
-        echo [警告] ComfyUI ❌ 未连接到 ComfyUI（生成功能不可用）
-    )
+    echo [警告] ComfyUI ❌ 无法连接 %COMFYUI_URL%
+    echo        可通过 set COMFYUI_URL=http://你的IP:8188 修改地址
 )
 
 echo.

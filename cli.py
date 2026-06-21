@@ -21,6 +21,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 BACKEND_URL = "http://127.0.0.1:8000"
 
+# 绕过系统代理（后端 & ComfyUI 均为本地/LAN 服务）
+import requests as _requests
+_req_session = _requests.Session()
+_req_session.trust_env = False
+
+
 
 def cmd_generate(args):
     """单条生成"""
@@ -34,7 +40,7 @@ def cmd_generate(args):
         "height": args.height,
     }
     t0 = time.time()
-    r = requests.post(f"{BACKEND_URL}/generate", json=payload, timeout=900)
+    r = _req_session.post(f"{BACKEND_URL}/generate", json=payload, timeout=900)
     print(f"  耗时: {time.time()-t0:.1f}s, HTTP {r.status_code}")
     if r.status_code != 200:
         print(f"  失败: {r.json().get('detail', r.text)}")
@@ -73,7 +79,7 @@ def cmd_vectorize(args):
         "embed_preview": False,
     }
     t0 = time.time()
-    r = requests.post(f"{BACKEND_URL}/vectorize", json=payload, timeout=600)
+    r = _req_session.post(f"{BACKEND_URL}/vectorize", json=payload, timeout=600)
     print(f"[矢量化] {args.input.name} -> {args.output}")
     print(f"  耗时: {time.time()-t0:.1f}s")
     if r.status_code != 200:
@@ -133,7 +139,7 @@ def cmd_batch(args):
                 "width": args.width,
                 "height": args.height,
             }
-            r = requests.post(f"{BACKEND_URL}/generate", json=payload, timeout=900)
+            r = _req_session.post(f"{BACKEND_URL}/generate", json=payload, timeout=900)
             if r.status_code == 200:
                 data = r.json()
                 item_dir = out_dir / f"{i:04d}_{item['text'][:16]}"
@@ -217,16 +223,26 @@ def cmd_check_env(args):
 
     # ComfyUI API 连通性
     print(f"\n  ComfyUI:")
+    comfyui_url = os.environ.get("COMFYUI_URL", "http://127.0.0.1:8188")
+    print(f"     配置地址: {comfyui_url}")
+    print(f"     (可通过环境变量 COMFYUI_URL 修改)")
     import requests as req
-    for url, label in [("http://127.0.0.1:8188", "本地"), ("http://10.195.155.46:8188", "远程")]:
-        try:
-            r = req.get(url, timeout=3)
-            if r.status_code == 200 or r.status_code == 404:
-                print(f"     {label:6s}: {url} [OK] 可达")
-            else:
-                print(f"     {label:6s}: {url} [WARN] 返回 {r.status_code}")
-        except:
-            print(f"     {label:6s}: {url} [NO] 不可达")
+    # 检测代理干扰
+    proxy = os.environ.get("HTTP_PROXY") or os.environ.get("http_proxy")
+    if proxy:
+        print(f"     检测到系统代理: {proxy}")
+        if "127.0.0.1" not in (os.environ.get("NO_PROXY", "") + os.environ.get("no_proxy", "")):
+            print(f"     [WARN] 代理可能干扰本地连接，建议设置: set NO_PROXY=127.0.0.1,localhost")
+    try:
+        # 绕过代理测试（ComfyUI 不应走代理）
+        r = req.get(comfyui_url, timeout=3, proxies={"http": None, "https": None})
+        if r.status_code == 200 or r.status_code == 404:
+            print(f"     连通性: [OK] 可达")
+        else:
+            print(f"     连通性: [WARN] 返回 {r.status_code}")
+    except:
+        print(f"     连通性: [NO] 不可达，请检查 ComfyUI 是否已启动")
+        print(f"     如 ComfyUI 在其他地址，请设置: set COMFYUI_URL=http://你的IP:8188")
 
     # GPU 检测
     print(f"\n  GPU:")
@@ -307,7 +323,7 @@ def _cmd_status():
     try:
         import requests
         t0 = time.time()
-        r = requests.get(f"{BACKEND_URL}/health", timeout=5)
+        r = _req_session.get(f"{BACKEND_URL}/health", timeout=5)
         print(f"  后端状态: {'运行中' if r.status_code==200 else '异常'} ({time.time()-t0:.1f}s)")
     except:
         print("  后端状态: 未运行 (启动: python back_end/main.py)")
@@ -329,7 +345,7 @@ def _cmd_interactive_generate(text_input: str):
     payload = {"text": text, "style_prompt": style, "seed": seed, "width": 1024, "height": 600}
     t0 = time.time()
     try:
-        r = requests.post(f"{BACKEND_URL}/generate", json=payload, timeout=900)
+        r = _req_session.post(f"{BACKEND_URL}/generate", json=payload, timeout=900)
         if r.status_code == 200:
             data = r.json()
             out_dir = Path("output") / f"int_{int(time.time())}"
@@ -356,7 +372,7 @@ def _cmd_interactive_vectorize(path: str):
         img = Image.open(p); buf = io.BytesIO(); img.save(buf, format="PNG")
         b64 = base64.b64encode(buf.getvalue()).decode()
         t0 = time.time()
-        r = requests.post(f"{BACKEND_URL}/vectorize", json={"image_b64": b64, "use_edge_driven": True, "embed_preview": False}, timeout=600)
+        r = _req_session.post(f"{BACKEND_URL}/vectorize", json={"image_b64": b64, "use_edge_driven": True, "embed_preview": False}, timeout=600)
         if r.status_code == 200:
             data = r.json()
             out_path = p.with_suffix(".svg")
@@ -396,7 +412,7 @@ def _cmd_interactive_batch(path: str):
     for i, item in enumerate(items):
         print(f"    [{i+1}/{len(items)}] {item['text'][:20]}...", end=" ", flush=True)
         try:
-            r = requests.post(f"{BACKEND_URL}/generate", json={"text": item["text"], "style_prompt": item["style"], "seed": item["seed"], "width": 1024, "height": 600}, timeout=900)
+            r = _req_session.post(f"{BACKEND_URL}/generate", json={"text": item["text"], "style_prompt": item["style"], "seed": item["seed"], "width": 1024, "height": 600}, timeout=900)
             if r.status_code == 200:
                 data = r.json()
                 item_dir = out_dir / f"{i:04d}_{item['text'][:16]}"

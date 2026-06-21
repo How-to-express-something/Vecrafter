@@ -1,4 +1,5 @@
 import json
+import os
 import time
 import requests
 import websocket
@@ -8,10 +9,15 @@ from typing import Optional, Dict, Any
 import threading
 
 class ComfyUIWrapper:
-    def __init__(self, server_url: str = "http://127.0.0.1:8188"):
+    def __init__(self, server_url: str = None):
+        if server_url is None:
+            server_url = os.environ.get("COMFYUI_URL", "http://127.0.0.1:8188")
         self.server_url = server_url.rstrip("/")
         self.ws_url = server_url.replace("http://", "ws://", 1).rstrip("/") + "/ws"
         self.client_id = str(int(time.time() * 1000))  # 唯一客户端 ID
+        # 绕过系统代理（ComfyUI 通常为本地/LAN 服务）
+        self._session = requests.Session()
+        self._session.trust_env = False
 
     def load_workflow(self, workflow_path: str) -> Dict[str, Any]:
         with open(workflow_path, "r", encoding="utf-8") as f:
@@ -20,14 +26,14 @@ class ComfyUIWrapper:
     def queue_prompt(self, workflow: Dict[str, Any]) -> str:
         """提交工作流，返回 prompt_id"""
         payload = {"prompt": workflow, "client_id": self.client_id}
-        resp = requests.post(f"{self.server_url}/prompt", json=payload)
+        resp = self._session.post(f"{self.server_url}/prompt", json=payload)
         if resp.status_code != 200:
             raise Exception(f"Queue prompt failed: {resp.text}")
         return resp.json()["prompt_id"]
 
     def get_history(self, prompt_id: str) -> Dict[str, Any]:
         """获取指定 prompt_id 的历史记录"""
-        resp = requests.get(f"{self.server_url}/history/{prompt_id}")
+        resp = self._session.get(f"{self.server_url}/history/{prompt_id}")
         if resp.status_code != 200:
             raise Exception(f"Get history failed: {resp.text}")
         return resp.json()
@@ -69,7 +75,7 @@ class ComfyUIWrapper:
                         "subfolder": subfolder,
                         "type": img_type,
                     }
-                    resp = requests.get(f"{self.server_url}/view", params=params)
+                    resp = self._session.get(f"{self.server_url}/view", params=params)
                     if resp.status_code == 200:
                         img = Image.open(BytesIO(resp.content))
                         images.append(img)
