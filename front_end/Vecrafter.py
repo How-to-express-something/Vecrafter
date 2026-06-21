@@ -101,6 +101,10 @@ def render_art_title():
 
 BACKEND_URL = "http://127.0.0.1:8000"
 
+# 绕过系统代理（后端在本地，不应走代理）
+_session = requests.Session()
+_session.trust_env = False
+
 # ======================= 前端持久化日志 =======================
 _LOG_DIR = Path(__file__).resolve().parent.parent / "logs"
 _LOG_DIR.mkdir(parents=True, exist_ok=True)
@@ -156,7 +160,7 @@ class BackendAPI:
                 "sampler_name": "res_multistep",
                 "scheduler": "simple",
             }
-            resp = requests.post(
+            resp = _session.post(
                 f"{BACKEND_URL}/generate",
                 json=payload,
                 timeout=900
@@ -207,7 +211,7 @@ class BackendAPI:
                 "anti_alias": params.get("anti_alias", True),
                 "output_format": params.get("output_format", "png_rgba"),
             }
-            resp = requests.post(
+            resp = _session.post(
                 f"{BACKEND_URL}/preprocess",
                 json=payload,
                 timeout=600,
@@ -246,7 +250,7 @@ class BackendAPI:
                 "embed_preview": params.get("embed_preview", True),
                 "output_preview_png": params.get("output_preview_png", False),
             }
-            resp = requests.post(
+            resp = _session.post(
                 f"{BACKEND_URL}/vectorize",
                 json=payload,
                 timeout=600,
@@ -335,7 +339,7 @@ def _render_history_item(item: dict, idx: int, location: str = "main"):
             else:
                 if st.button("📷 加载预览", key=f"load_{prefix}"):
                     try:
-                        resp = requests.get(direct_url, timeout=30)
+                        resp = _session.get(direct_url, timeout=30)
                         if resp.status_code == 200:
                             data["png_bytes"] = resp.content
                             st.rerun()
@@ -425,7 +429,7 @@ def init_session():
 def _load_history_from_backend():
     """启动时从后端加载 output/ 中的历史结果"""
     try:
-        resp = requests.get(f"{BACKEND_URL}/results?limit=20", timeout=10)
+        resp = _session.get(f"{BACKEND_URL}/results?limit=20", timeout=10)
         if resp.status_code != 200:
             return
         results = resp.json()
@@ -1035,7 +1039,7 @@ def main():
                         img_bytes = hist_data["png_bytes"]
                     elif hist_data.get("preview_path"):
                         try:
-                            resp = requests.get(
+                            resp = _session.get(
                                 f"{BACKEND_URL}/results/file",
                                 params={"path": hist_data["preview_path"]},
                                 timeout=30,
