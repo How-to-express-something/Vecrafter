@@ -15,6 +15,9 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+:: 绕过系统代理（ComfyUI 在本地/LAN，不应走代理）
+set "NO_PROXY=127.0.0.1,localhost,::1,%NO_PROXY%"
+
 :: 自动启动 ComfyUI（如果设置了 COMFYUI_HOME）
 if defined COMFYUI_HOME (
     echo [启动] 自动拉起 ComfyUI（路径: %COMFYUI_HOME%）...
